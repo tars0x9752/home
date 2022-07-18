@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-home-manager switch --flake '.#tars'
+# 被ってる設定ファイルはsuffixに.bckをつけたコピーを自動生成する.
+home-manager switch --flake '.#tars' -b bck 
