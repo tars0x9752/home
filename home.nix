@@ -19,9 +19,39 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  home.packages = [
-    pkgs.htop
-    pkgs.cowsay
+  home.packages = with pkgs; [
+    # nix
+    rnix-lsp
+    nixpkgs-fmt
+
+    # util
+    coreutils
+    binutils
+    gawk
+    gnumake
+    gnused
+    jo
+    jq
+    curl
+    wget
+    xsel
+    xclip
+
+    # util replacement
+    bat
+    broot
+    lsd
+    ripgrep
+    fd
+    fzf
+    dua
+
+    # gemini
+    amfora
+
+    # other
+    neofetch
+    cowsay
   ];
 
   programs.git = {
@@ -46,6 +76,16 @@
         editor = "nvim";
       };
       pull.ff = "only";
+    };
+
+    delta = {
+      enable = true;
+      options = {
+        features = "side-by-side line-numbers";
+        delta = {
+          navigate = true;
+        };
+      };
     };
   };
 }
