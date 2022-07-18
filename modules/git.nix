@@ -32,6 +32,7 @@
       enable = true;
       options = {
         features = "side-by-side line-numbers";
+        syntax-theme = "Monokai Extended Origin";
         delta = {
           navigate = true;
         };

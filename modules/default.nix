@@ -7,5 +7,6 @@
     ./starship.nix
     ./node.nix
     ./neovim.nix
+    ./bash
   ];
 }
