@@ -19,10 +19,6 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  xdg.configFile = {
-    "starship.toml".source = ./xdg-conf/starship.toml;
-  };
-
   imports = [
     ./modules
   ];
