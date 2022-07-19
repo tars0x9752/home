@@ -18,6 +18,7 @@
     wget
     xsel
     xclip
+    gettext
 
     # util replacement
     bat

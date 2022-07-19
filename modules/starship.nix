@@ -4,7 +4,7 @@
   programs.starship = {
     enable = true;
 
-    # default で true だけ一応
+    # default で true だけど明示的に書いとく
     enableBashIntegration = true;
   };
 
