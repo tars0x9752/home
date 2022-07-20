@@ -9,5 +9,6 @@
     ./node.nix
     ./rust.nix
     ./bash
+    ./blesh
   ];
 }

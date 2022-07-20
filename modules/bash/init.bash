@@ -56,10 +56,13 @@ export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/
 
 source ~/.fzf_fn
 
-source "$HOME/.cargo/env"
-
 source ~/.bash_completion.d/alacritty # alacritty 使わないなら消しておｋ
 
-source ~/.local/share/blesh/ble.sh
+BLESH_PATH=~/.nix-profile/share/blesh/ble.sh
+
+# Nix版ではなくローカル版使いたい場合はこっちを使う
+# BLESH_PATH=~/.local/share/blesh/ble.sh
+
+source $BLESH_PATH
 
 neofetch
