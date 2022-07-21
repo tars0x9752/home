@@ -65,4 +65,4 @@ BLESH_PATH=~/.nix-profile/share/blesh/ble.sh
 
 source $BLESH_PATH
 
-neofetch
+# neofetch
