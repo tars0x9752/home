@@ -54,6 +54,8 @@ gitcb() {
 ## home manager workaround
 export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
 
+export GPG_TTY=$(tty)
+
 source ~/.fzf_fn
 
 source ~/.bash_completion.d/alacritty # alacritty 使わないなら消しておｋ

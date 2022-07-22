@@ -19,6 +19,7 @@
     xsel
     xclip
     gettext
+    gh
 
     # util replacement
     bat

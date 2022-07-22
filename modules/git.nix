@@ -17,6 +17,11 @@
 
     includes = [{ path = "~/.config/git/localconf"; }];
 
+    signing = {
+      key = "7F507F37EDAA9907";
+      signByDefault = true;
+    };
+
     extraConfig = {
       init = { defaultBranch = "main"; };
       branch = { sort = "-committerdate"; };
@@ -24,6 +29,7 @@
         editor = "nvim";
       };
       pull.ff = "only";
+      tag.gpgSign = true;
     };
 
     # git-delta
