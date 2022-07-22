@@ -5,15 +5,15 @@
     # cli
     ./cli.nix
     ./git.nix
-    ./starship.nix
-    ./neovim.nix
+    ./neovim
+    ./starship
 
     # shell
     ./bash
     ./blesh
 
     # dev
-    ./node.nix
+    ./node
     ./rust.nix
 
     # font

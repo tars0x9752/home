@@ -58,13 +58,13 @@ source ~/.fzf_fn
 
 source ~/.bash_completion.d/alacritty # alacritty 使わないなら消しておｋ
 
+source ~/.bash_completion.d/npm-completion
+
 BLESH_PATH=~/.nix-profile/share/blesh/ble.sh
 
 # Nix版ではなくローカル版使いたい場合はこっちを使う
 # BLESH_PATH=~/.local/share/blesh/ble.sh
 
 source $BLESH_PATH
-
-source ~/.config/bash/npm-completion.bash
 
 # neofetch
