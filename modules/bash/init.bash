@@ -42,10 +42,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# ----- USER DEF -----
+alias g=git
 
 ## git clean merged branch
-gitcb() {
+g-clean() {
   local PROTECTED_BRANCHES="main|master|develop|dev"
   git fetch --prune
   git branch --merged | rg --invert-match "\*|${PROTECTED_BRANCHES}" | xargs git branch -d
