@@ -89,11 +89,11 @@ function g:push {
 }
 
 function g:push.force {
-  git push --force-with-lease "$@"
+  git push --force-with-lease
 }
 
 function g:push.origin-head {
-  git push orgin HEAD
+  git push origin HEAD
 }
 
 # ------ log ------
