@@ -99,6 +99,10 @@ function g:push.origin-head {
   git push origin HEAD
 }
 
+function g:push.origin-head.force {
+  git push origin HEAD --force-with-lease
+}
+
 # ------ log ------
 
 function g:log {
@@ -240,6 +244,29 @@ function g:delete-merged-branch {
   git branch --merged | rg --invert-match "\*|${PROTECTED_BRANCHES}" | xargs git branch -d
 }
 
+# 現在のブランチに main を rebaseする
+function g:rebase-main {
+  local currentbranch=$(git branch --show-current)
+  if [[ "$currentbranch" == "main" ]]; then
+    echo "Invalid operation. you are in main branch."
+    false
+  else
+    git fetch origin
+    git rebase origin/main
+  fi
+}
+
+function g:rebase-master {
+  local currentbranch=$(git branch --show-current)
+  if [[ "$currentbranch" == "master" ]]; then
+    echo "Invalid operation. you are in master branch."
+    false
+  else
+    git fetch origin
+    git rebase origin/main
+  fi
+}
+
 # ------ handy fns ------
 
 function g {
@@ -286,6 +313,6 @@ function g@l {
   g:log.pretty-oneline
 }
 
-function g@::delete {
+function g@zdelete {
   g:delete-merged-branch
 }
