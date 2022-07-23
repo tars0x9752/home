@@ -1,6 +1,9 @@
 # -----------------
 # git functions for bash
 # 極力tab補完で入力できるようにする
+#
+# g: basic function
+# g@ commonly used function
 # -----------------
 
 # ------ add ------
@@ -25,12 +28,12 @@ function g:branch {
 }
 
 function g:branch.verbose {
-  if (($# == 0)); then
-    git branch --verbose
-    git remote --verbose
-  else
-    git branch "$@"
-  fi
+  git branch --verbose
+  git remote --verbose
+}
+
+function g:branch.delete {
+  git branch --delete "$1"
 }
 
 # ------ cd ------
@@ -225,10 +228,6 @@ function g:stash.list {
 
 # ------ misc ------
 
-function g {
-  g:status.mini
-}
-
 # http://stackoverflow.com/questions/4822471/count-number-of-lines-in-a-git-repository
 function g:count-line {
   git ls-files | xargs wc -l
@@ -239,4 +238,54 @@ function g:delete-merged-branch {
   local PROTECTED_BRANCHES="main|master|develop|dev"
   git fetch --prune
   git branch --merged | rg --invert-match "\*|${PROTECTED_BRANCHES}" | xargs git branch -d
+}
+
+# ------ handy fns ------
+
+function g {
+  g:status.mini
+}
+
+function g@a {
+  g:add.all
+}
+
+function g@c {
+  g:commit
+}
+
+function g@p {
+  g:push.origin-head
+}
+
+function g@d {
+  g:diff
+}
+
+function g@ds {
+  g:diff.staged
+}
+
+function g@s {
+  g:switch $1
+}
+
+function g@sc {
+  g:switch.create $1
+}
+
+function g@ra {
+  g:restore.all
+}
+
+function g@un {
+  g:restore.unstage.all
+}
+
+function g@l {
+  g:log.pretty-oneline
+}
+
+function g@::delete {
+  g:delete-merged-branch
 }
