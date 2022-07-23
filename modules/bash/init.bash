@@ -42,15 +42,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-alias g=git
-
-## git clean merged branch
-g-clean() {
-  local PROTECTED_BRANCHES="main|master|develop|dev"
-  git fetch --prune
-  git branch --merged | rg --invert-match "\*|${PROTECTED_BRANCHES}" | xargs git branch -d
-}
-
 ## home manager workaround
 export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
 
