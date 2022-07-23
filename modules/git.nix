@@ -28,11 +28,9 @@ in
     };
 
     extraConfig = {
-      init = { defaultBranch = DEFAULT_BRANCH; };
-      branch = { sort = "-committerdate"; };
-      core = {
-        editor = "nvim";
-      };
+      init.defaultBranch = DEFAULT_BRANCH;
+      branch.sort = "-committerdate";
+      core.editor = "nvim";
       pull.ff = "only";
       tag.gpgSign = true;
     };
@@ -44,9 +42,7 @@ in
       options = {
         features = "side-by-side line-numbers";
         syntax-theme = "Monokai Extended Origin";
-        delta = {
-          navigate = true;
-        };
+        delta.navigate = true;
       };
     };
   };

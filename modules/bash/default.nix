@@ -13,6 +13,14 @@
       if [[ -e ~/.config/bash/local-init.bash ]]; then
         source ~/.config/bash/local-init.bash
       fi
+
+      function bash:restart {
+        exec bash -l
+      }
+
+      function cd:conf {
+        cd ~/.config
+      }
     '';
   };
 
