@@ -131,7 +131,7 @@ function g:restore.all {
 }
 
 function g:restore.unstage {
-  git restore --staged
+  git restore --staged "$@"
 }
 
 function g:restore.unstage.all {
@@ -174,7 +174,7 @@ function g:show {
   git show "$@"
 }
 
-function g:status.mini {
+function g:show.head {
   git show HEAD
 }
 
@@ -240,59 +240,3 @@ function g:delete-merged-branch {
   git fetch --prune
   git branch --merged | rg --invert-match "\*|${PROTECTED_BRANCHES}" | xargs git branch -d
 }
-
-# function handle-git {
-#   if (($# == 0)); then
-#     git-status-mini
-#   fi
-
-#   case "$1" in
-#   a)
-#     git add --all
-#     git status --short --branch
-#     ;;
-
-#   a-p) git add -p "${@:2}" ;;
-
-#   # http://stackoverflow.com/questions/4822471/count-number-of-lines-in-a-git-repository
-#   count-line) git ls-files | xargs wc -l ;;
-
-#   b)
-#     if (($# == 1)); then
-#       git branch --verbose
-#       git remote --verbose
-#     else
-#       git branch "${@:2}"
-#     fi
-#     ;;
-
-#   # cd to toplevel (root)
-#   top) cd "$(git rev-parse --show-toplevel)" ;;
-#   root) cd "$(git rev-parse --show-toplevel)" ;;
-
-#   # diff
-#   d) git diff ;;
-
-#   # インデックス vs 最新のコミット
-#   d-stg) git diff --staged ;;
-
-#   # 最新のコミット vs その1つ前
-#   d-prev) git diff HEAD^ ;;
-
-#   # 任意のコミットの変更内容
-#   d-com)
-#     local sha=$2
-#     git diff $sha^..$sha
-#     ;;
-#   c) git commit --verbose ;;
-#   c-ame) git commit --amend ;;
-#   c-ameno) git commit --amend --no-edit ;;
-
-#   l) git log ;;
-#   # pretty onelin
-#   l-oneline) git log --pretty=format:'%C(yellow)%h %Creset%ad %Cred%an%Cgreen%d %Creset%s' --date=short ;;
-#   l-last) git log -1 HEAD --stat ;;
-#   esac
-# }
-
-# alias g=handle-git
