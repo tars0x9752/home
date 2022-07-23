@@ -1,5 +1,6 @@
 { ... }:
 
+with builtins;
 let
   DEFAULT_BRANCH = "main";
   DEFAULT_BRANCH_OLD = "master";
@@ -7,7 +8,10 @@ let
   DEVELOP_BRANCH_ABBREV = "dev";
 in
 let
-  PROTECTED_BRANCHES = "${DEFAULT_BRANCH}|${DEFAULT_BRANCH_OLD}|${DEVELOP_BRANCH}|${DEVELOP_BRANCH_ABBREV}";
+  PROTECTED_BRANCHE_LIST = [ DEFAULT_BRANCH DEFAULT_BRANCH_OLD DEVELOP_BRANCH DEVELOP_BRANCH_ABBREV ];
+in
+let
+  PROTECTED_BRANCHES = concatStringsSep "|" [ DEFAULT_BRANCH DEFAULT_BRANCH_OLD DEVELOP_BRANCH DEVELOP_BRANCH_ABBREV ];
 in
 {
   programs.git = {
@@ -154,6 +158,18 @@ in
       git push origin HEAD --force-with-lease
     }
 
+    # ------ pull ------
+
+    function g:pull {
+      git pull "$@"
+    }
+
+    ${concatStringsSep "\n" (map (branchname: ''
+    function g:pull.${branchname} {
+      git pull origin ${branchname}
+    }
+    '') PROTECTED_BRANCHE_LIST)}
+
     # ------ log ------
 
     function g:log {
@@ -288,59 +304,31 @@ in
       git ls-files | xargs wc -l
     }
 
-    ## delete merged branch
+    # マージ済みブランチを削除
+    # 注: squash マージされたものは git branch --merged で表示されないのでこれでは消せないことに注意
     function g:delete-merged-branch {
       git fetch --prune
-      git branch --merged | rg --invert-match "\*|${PROTECTED_BRANCHES}" | xargs git branch -d
+      git branch -d $(git branch --merged | rg --invert-match "\*|${PROTECTED_BRANCHES}")
     }
 
-    # 現在のブランチに ${DEFAULT_BRANCH} を rebase する
-    function g:rebase-${DEFAULT_BRANCH} {
+    # プロテクトされてないブランチを一括削除
+    function g:delete-non-protected-branch {
+      git branch -D $(git branch | rg --invert-match "\*|${PROTECTED_BRANCHES}")
+    }
+
+    ${concatStringsSep "\n" (map (branchname: ''
+    # 現在のブランチに ${branchname} を rebase する
+    function g:rebase-${branchname} {
       local currentbranch=$(git branch --show-current)
-      if [[ "$currentbranch" == "${DEFAULT_BRANCH}" ]]; then
-        echo "Invalid operation. you are in ${${DEFAULT_BRANCH}} branch."
+      if [[ "$currentbranch" == "${branchname}" ]]; then
+        echo "Invalid operation. you are in ${branchname} branch."
         false
       else
         git fetch origin
-        git rebase origin/${${DEFAULT_BRANCH}}
+        git rebase origin/${branchname}
       fi
     }
-
-    # 現在のブランチに ${DEFAULT_BRANCH_OLD} を rebase する
-    function g:rebase-${DEFAULT_BRANCH_OLD} {
-      local currentbranch=$(git branch --show-current)
-      if [[ "$currentbranch" == "${DEFAULT_BRANCH_OLD}" ]]; then
-        echo "Invalid operation. you are in ${${DEFAULT_BRANCH_OLD}} branch."
-        false
-      else
-        git fetch origin
-        git rebase origin/${${DEFAULT_BRANCH_OLD}}
-      fi
-    }
-
-    # 現在のブランチに ${DEVELOP_BRANCH} を rebase する
-    function g:rebase-${DEVELOP_BRANCH} {
-      local currentbranch=$(git branch --show-current)
-      if [[ "$currentbranch" == "${DEVELOP_BRANCH}" ]]; then
-        echo "Invalid operation. you are in ${${DEVELOP_BRANCH}} branch."
-        false
-      else
-        git fetch origin
-        git rebase origin/${${DEVELOP_BRANCH}}
-      fi
-    }
-
-    # 現在のブランチに ${DEVELOP_BRANCH_ABBREV} を rebase する
-    function g:rebase-${DEVELOP_BRANCH_ABBREV} {
-      local currentbranch=$(git branch --show-current)
-      if [[ "$currentbranch" == "${DEVELOP_BRANCH_ABBREV}" ]]; then
-        echo "Invalid operation. you are in ${${DEVELOP_BRANCH_ABBREV}} branch."
-        false
-      else
-        git fetch origin
-        git rebase origin/${${DEVELOP_BRANCH_ABBREV}}
-      fi
-    }
+    '') PROTECTED_BRANCHE_LIST)}
 
     # ------ handy fns ------
 
@@ -359,6 +347,18 @@ in
     function g@p {
       g:push.origin-head
     }
+
+    function g@f {
+      g:fetch.prune
+    }
+
+    ${concatStringsSep "\n" (map (branchname: ''
+    function g@${branchname} {
+      g:fetch.prune
+      g:switch ${branchname}
+      g:pull.${branchname}
+    }
+    '') PROTECTED_BRANCHE_LIST)}
 
     function g@d {
       g:diff
@@ -388,8 +388,12 @@ in
       g:log.pretty-oneline
     }
 
-    function g@zdelete {
+    function g@z-del-merged {
       g:delete-merged-branch
+    }
+
+    function g@z-del-nonpro {
+      g:delete-non-protected-branch
     }
   '';
 }
