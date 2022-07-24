@@ -14,11 +14,11 @@
         source ~/.config/bash/local-init.bash
       fi
 
-      function bash:restart {
+      bash:restart() {
         exec bash -l
       }
 
-      function cd:conf {
+      cd:conf() {
         cd ~/.config
       }
     '';
