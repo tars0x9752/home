@@ -2,6 +2,9 @@
 
 {
   imports = [
+    # app
+    ./app.nix
+
     # cli
     ./cli.nix
     ./git.nix

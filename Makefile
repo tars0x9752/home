@@ -12,7 +12,7 @@ fmt:
 
 .PHONY: switch
 switch:
-	home-manager switch --flake '.#tars' -b bck
+	home-manager switch --flake '.#tars' -b bck --impure
 
 .PHONY: update
 update:
