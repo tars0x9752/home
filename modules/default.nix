@@ -16,6 +16,9 @@
     ./bash
     ./blesh
 
+    # wm
+    ./i3.nix
+
     # dev
     ./node
     ./rust.nix
