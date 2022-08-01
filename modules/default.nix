@@ -5,6 +5,7 @@
     # cli
     ./cli.nix
     ./git.nix
+    ./gpg.nix
     ./neovim
     ./starship
 

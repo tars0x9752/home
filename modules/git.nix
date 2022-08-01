@@ -23,7 +23,7 @@ in
     includes = [{ path = "~/.config/git/localconf"; }];
 
     signing = {
-      key = "7F507F37EDAA9907";
+      key = "7E48DB4B7AADB252";
       signByDefault = true;
     };
 
