@@ -21,6 +21,10 @@
       cd:conf() {
         cd ~/.config
       }
+
+      copy() {
+        xsel -bi
+      }
     '';
   };
 
