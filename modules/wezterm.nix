@@ -11,6 +11,7 @@
     return {
       font_size = 20,
       color_scheme = 'Molokai',
+      window_background_opacity = 0.8,
     }
   '';
 }

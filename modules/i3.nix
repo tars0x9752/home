@@ -36,7 +36,7 @@
         ];
 
         # polybar を使うので i3bar は不要
-        bars = [];
+        bars = [ ];
       };
     };
   };
@@ -46,6 +46,11 @@
     enable = true;
 
     package = with pkgs; rofi.override { plugins = [ rofi-calc rofi-emoji ]; };
+  };
+
+  # picom
+  services.picom = {
+    enable = true;
   };
 
   # polybar
@@ -58,7 +63,7 @@
       # githubSupport = true;
     };
 
-    config = rec {
+    config = {
       "colors" = {
         background = "#282A2E";
         background-alt = "#373B41";
