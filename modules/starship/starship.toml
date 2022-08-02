@@ -1,12 +1,13 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# ligature required
 format = """
-[╭─](bright-black) $all\
+[:::](bright-black) $all\
 $fill\
 $time\
 $line_break\
-[╰─](bright-black) $character
+[->>](bright-black) $character
 """
 
 # Inserts a blank line between shell prompts
