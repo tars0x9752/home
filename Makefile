@@ -16,7 +16,7 @@ switch:
 
 .PHONY: update
 update:
-	home-manager switch --flake '.#tars' -b bck --recreate-lock-file
+	home-manager switch --flake '.#tars' -b bck --impure --recreate-lock-file
 
 .PHONY: update-lock-only
 update-lock-only:

@@ -30,6 +30,7 @@
 
         startup = [
           { command = "systemctl --user restart polybar"; always = true; notification = false; }
+          { command = "xset r rate 200 30"; always = true; notification = false; }
         ];
       };
     };
@@ -55,7 +56,7 @@
     config = {
       "bar/top" = {
         width = "100%";
-        height = "5%";
+        height = "3%";
         radius = 5;
         modules-center = "date";
       };
