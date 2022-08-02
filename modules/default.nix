@@ -19,6 +19,9 @@
     # wm
     ./i3.nix
 
+    # term
+    ./wezterm.nix
+
     # dev
     ./node
     ./rust.nix

@@ -28,12 +28,14 @@
 
         menu = "${config.programs.rofi.package}/bin/rofi -show drun";
 
+        terminal = "wezterm";
+
         startup = [
           { command = "systemctl --user restart polybar"; always = true; notification = false; }
           { command = "xset r rate 200 30"; always = true; notification = false; }
         ];
 
-        # polybar を使うので i3bar は明示的に無効化
+        # polybar を使うので i3bar は不要
         bars = [];
       };
     };
