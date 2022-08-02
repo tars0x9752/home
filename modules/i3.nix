@@ -88,7 +88,7 @@
         separator = "|";
         separator-foreground = "\${colors.disabled}";
 
-        font-0 = "JetBrainsMono Nerd Font:style=Regular:size=18";
+        font-0 = "JetBrainsMono Nerd Font:style=Regular:size=16";
 
         modules-left = "xworkspaces xwindow";
         modules-right = "filesystem pulseaudio xkeyboard memory cpu wlan date";
