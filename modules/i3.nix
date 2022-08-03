@@ -22,7 +22,7 @@
         };
 
         gaps = {
-          inner = 10;
+          inner = 20;
           smartGaps = true;
         };
 
@@ -38,6 +38,37 @@
 
         # polybar を使うので i3bar は不要
         bars = [ ];
+
+        defaultWorkspace = "workspace number 1";
+
+        colors = {
+          focused = {
+            text = "#000000";        # タイトルのテキスト
+            background = "#08D9D6";  # タイトルの背景
+            border = "#08D9D6";      # タイトルのボーダー
+            childBorder = "#08D9D6"; # window全体のボーダー
+            indicator = "#ff2e63";   # vertical / horizontal のアレ
+          };
+
+          # コンテナの中に複数windowがあって, そのなかの最後にフォーカスされてたもの
+          focusedInactive = {
+            text = "#F1FAEE";        # タイトルのテキスト
+            background = "#047672";  # タイトルの背景
+            border = "#047672";      # タイトルのボーダー
+            childBorder = "#047672"; # window全体のボーダー
+            indicator = "#ff2e63";   # vertical / horizontal のアレ
+          };
+
+          unfocused = {
+            text = "#F1FAEE";        # タイトルのテキスト
+            background = "#252a34";  # タイトルの背景
+            border = "#252a34";      # タイトルのボーダー
+            childBorder = "#252a34"; # window全体のボーダー
+            indicator = "#ff2e63";   # vertical / horizontal のアレ
+          };
+        };
+
+        window.border = 1; # 新規作成した window にのみ有効
       };
     };
   };
