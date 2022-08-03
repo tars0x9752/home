@@ -20,6 +20,7 @@
     xclip
     gettext
     gh
+    polkit_gnome
 
     # util replacement
     bat

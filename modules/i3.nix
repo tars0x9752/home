@@ -33,6 +33,7 @@
         startup = [
           { command = "systemctl --user restart polybar"; always = true; notification = false; }
           { command = "xset r rate 200 30"; always = true; notification = false; }
+          { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; always = true; notification = false; }
         ];
 
         # polybar を使うので i3bar は不要
