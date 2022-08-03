@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     discord
     element-desktop
-    keeweb
+    keeweb # configuration.nix で services.gnome.gnome-keyring.enable = true; が必要
     firefox
   ];
 }
