@@ -43,28 +43,28 @@
 
         colors = {
           focused = {
-            text = "#000000";        # タイトルのテキスト
-            background = "#08D9D6";  # タイトルの背景
-            border = "#08D9D6";      # タイトルのボーダー
+            text = "#000000"; # タイトルのテキスト
+            background = "#08D9D6"; # タイトルの背景
+            border = "#08D9D6"; # タイトルのボーダー
             childBorder = "#08D9D6"; # window全体のボーダー
-            indicator = "#ff2e63";   # vertical / horizontal のアレ
+            indicator = "#ff2e63"; # vertical / horizontal のアレ
           };
 
           # コンテナの中に複数windowがあって, そのなかの最後にフォーカスされてたもの
           focusedInactive = {
-            text = "#F1FAEE";        # タイトルのテキスト
-            background = "#047672";  # タイトルの背景
-            border = "#047672";      # タイトルのボーダー
+            text = "#F1FAEE"; # タイトルのテキスト
+            background = "#047672"; # タイトルの背景
+            border = "#047672"; # タイトルのボーダー
             childBorder = "#047672"; # window全体のボーダー
-            indicator = "#ff2e63";   # vertical / horizontal のアレ
+            indicator = "#ff2e63"; # vertical / horizontal のアレ
           };
 
           unfocused = {
-            text = "#F1FAEE";        # タイトルのテキスト
-            background = "#252a34";  # タイトルの背景
-            border = "#252a34";      # タイトルのボーダー
+            text = "#F1FAEE"; # タイトルのテキスト
+            background = "#252a34"; # タイトルの背景
+            border = "#252a34"; # タイトルのボーダー
             childBorder = "#252a34"; # window全体のボーダー
-            indicator = "#ff2e63";   # vertical / horizontal のアレ
+            indicator = "#ff2e63"; # vertical / horizontal のアレ
           };
         };
 
@@ -92,17 +92,19 @@
     package = pkgs.polybar.override {
       i3GapsSupport = true;
       alsaSupport = true;
+      pulseSupport = true;
+      iwSupport = true;
       # githubSupport = true;
     };
 
     config = {
       "colors" = {
-        background = "#282A2E";
-        background-alt = "#373B41";
-        foreground = "#C5C8C6";
-        primary = "#F0C674";
-        secondary = "#8ABEB7";
-        alert = "#A54242";
+        background = "#252a34";
+        background-alt = "#3b4354";
+        foreground = "#F1FAEE";
+        primary = "#08D9D6";
+        secondary = "#047672";
+        alert = "#ff2e63";
         disabled = "#707880";
       };
 
@@ -127,10 +129,10 @@
         separator = "|";
         separator-foreground = "\${colors.disabled}";
 
-        font-0 = "JetBrainsMono Nerd Font:style=Regular:size=16";
+        font-0 = "JetBrainsMono Nerd Font:style=Regular:size=16;5";
 
         modules-left = "xworkspaces xwindow";
-        modules-right = "filesystem pulseaudio xkeyboard memory cpu wlan date";
+        modules-right = "filesystem pulseaudio xkeyboard memory cpu wlan date battery";
 
         cursor-click = "pointer";
         cursor-scroll = "ns-resize";
@@ -166,13 +168,15 @@
         type = "internal/fs";
         interval = 25;
         mount-0 = "/";
-        label-mounted = "%{F#F0C674}%mountpoint%%{F-} %percentage_used%%";
+        label-mounted = "%{F#08D9D6} %mountpoint%%{F-} %percentage_used%%";
         label-unmounted = "%mountpoint% not mounted";
         label-unmounted-foreground = "\${colors.disabled}";
       };
 
       "module/pulseaudio" = {
         type = "internal/pulseaudio";
+
+        sink = "alsa_output.pci-0000_00_1f.3.analog-stereo"; # 違うsinkや違うマシンで使う場合は要変更
 
         format-volume-prefix = "VOL ";
         format-volume-prefix-foreground = "\${colors.primary}";
@@ -217,9 +221,10 @@
         interval = 5;
         format-connected = "<label-connected>";
         format-disconnected = "<label-disconnected>";
-        label-disconnected = "%{F#F0C674}%ifname%%{F#707880} disconnected";
+        label-disconnected = "睊 wifi off";
         interface-type = "wireless";
-        label-connected = "%{F#F0C674}%ifname%%{F-}"; # %essid% %local_ip%
+        label-connected = "直 wifi on";
+        label-connected-foreground = "\${colors.primary}";
       };
 
       "module/date" = {
@@ -230,6 +235,27 @@
         label = "%date%";
         label-foreground = "\${colors.primary}";
       };
+
+      "module/battery" = {
+        type = "internal/battery";
+        battery = "BAT1";
+        adapter = "ACAD";
+        full-at = 99;
+        format-charging = "<label-charging>";
+        format-charging-foreground = "\${colors.primary}";
+        format-charging-background = "\${colors.background}";
+        format-full = "<label-full>";
+        format-full-foreground = "\${colors.primary}";
+        format-full-background = "\${colors.background}";
+        format-discharging = "<label-discharging>";
+        format-discharging-foreground = "\${colors.primary}";
+        format-discharging-background = "\${colors.background}";
+        label-charging = "  %percentage%% ";
+        label-discharging = "  %percentage%% ";
+        label-discharging-foreground = "\${colors.primary}";
+        label-full = "  %percentage%% ";
+      };
+
 
       "settings" = {
         screenchange-reload = true;
