@@ -73,16 +73,118 @@
     };
   };
 
+  # picom
+  services.picom = {
+    enable = true;
+  };
+
   # rofi
   programs.rofi = {
     enable = true;
 
     package = with pkgs; rofi.override { plugins = [ rofi-calc rofi-emoji ]; };
-  };
 
-  # picom
-  services.picom = {
-    enable = true;
+    extraConfig = {
+      show-icons = true;
+      modi = "drun,emoji";
+    };
+
+    theme =
+      let
+        mkL = config.lib.formats.rasi.mkLiteral;
+      in
+      {
+        "*" = {
+          bg0 = mkL "#242424E6";
+          bg1 = mkL "#7E7E7E80";
+          bg2 = mkL "#0860f2E6";
+          fg0 = mkL "#DEDEDE";
+          fg1 = mkL "#FFFFFF";
+          fg2 = mkL "#DEDEDE80";
+
+          background-color = mkL "transparent";
+          text-color = mkL "@fg0";
+
+          margin = 0;
+          padding = 0;
+          spacing = 0;
+        };
+
+        window = {
+          background-color = mkL "@bg0";
+          location = mkL "center";
+          width = 640;
+          y-offset = -200;
+          border-radius = 8;
+        };
+
+        inputbar = {
+          padding = mkL "12px";
+          spacing = mkL "12px";
+          children = map mkL [ "icon-search" "entry" ];
+        };
+
+        icon-search = {
+          expand = false;
+          filename = "search";
+          size = mkL "28px";
+          vertical-align = mkL "0.5";
+        };
+
+        entry = {
+          placeholder = "Search";
+          placeholder-color = mkL "@fg2";
+          vertical-align = mkL "0.5";
+        };
+
+        message = {
+          border = mkL "2px 0 0";
+          border-color = mkL "@bg1";
+          background-color = mkL "@bg1";
+        };
+
+        textbox = {
+          padding = mkL "8px 24px";
+        };
+
+        listview = {
+          lines = 10;
+          columns = 1;
+          fixed-height = false;
+          border = mkL "1px 0 0";
+          border-color = mkL "@bg1";
+        };
+
+        element = {
+          padding = mkL "8px 16px";
+          spacing = mkL "16px";
+          background-color = mkL "transparent";
+        };
+
+        element-icon = {
+          size = mkL "1em";
+          vertical-align = mkL "0.5";
+        };
+
+        element-text = {
+          text-color = mkL "inherit";
+          vertical-align = mkL "0.5";
+        };
+
+        "element normal active" = {
+          text-color = mkL "@bg2";
+        };
+
+        "element selected normal" = {
+          background-color = mkL "@bg2";
+          text-color = mkL "@fg1";
+        };
+
+        "element selected active" = {
+          background-color = mkL "@bg2";
+          text-color = mkL "@fg1";
+        };
+      };
   };
 
   # polybar

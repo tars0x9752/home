@@ -17,7 +17,7 @@
     ./blesh
 
     # wm
-    ./i3.nix
+    ./rice.nix
 
     # term
     ./wezterm.nix
