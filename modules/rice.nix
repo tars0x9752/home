@@ -41,6 +41,14 @@
 
         defaultWorkspace = "workspace number 1";
 
+        keybindings =
+          let
+            modifier = config.xsession.windowManager.i3.config.modifier;
+          in
+          lib.mkOptionDefault {
+            "${modifier}+c" = ''exec --no-startup-id "rofi -show calc -modi calc -no-show-match -no-sort > /dev/null"'';
+          };
+
         colors = {
           focused = {
             text = "#000000"; # タイトルのテキスト
