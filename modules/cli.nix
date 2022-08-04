@@ -21,6 +21,7 @@
     gettext
     gh
     polkit_gnome
+    cava
 
     # util replacement
     bat

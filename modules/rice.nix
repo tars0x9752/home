@@ -287,30 +287,14 @@
           label-unmounted-foreground = "\${colors.disabled}";
         };
 
-        # "module/pulseaudio" = {
-        #   type = "internal/pulseaudio";
-
-        #   # 違うsinkや違うマシンで使う場合は変更する or この行を消して pactl 等でデフォルトの sink を変更する
-        #   sink = "alsa_output.pci-0000_00_1f.3.analog-stereo";
-
-        #   format-volume-prefix = "VOL ";
-        #   format-volume-prefix-foreground = "\${colors.primary}";
-        #   format-volume = "<label-volume>";
-
-        #   label-volume = "%percentage%%";
-        #   label-muted = "muted";
-        #   label-muted-foreground = "\${colors.disabled}";
-        # };
-
         "module/pulseaudio-control-output" = {
           type = "custom/script";
           tail = true;
-          format-underline = "\${colors.primary}";
-          label-padding = 2;
-          label-foreground = "\${colors.foreground}";
+          label-padding = 1;
+          label-foreground = "\${colors.primary}";
 
           # 必要に応じて nickname および sink や source 名(node名)を変更すること
-          exec = ''${pulseaudio-control} --icons-volume " , " --icon-muted " " --node-nicknames-from "device.description" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:  Speakers" listen'';
+          exec = ''${pulseaudio-control} --icons-volume " , " --icon-muted " " --node-nicknames-from "device.profile.name" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:蓼 Speakers" listen'';
           click-right = "exec ${pkgs.pavucontrol}/bin/pavucontrol &";
           click-left = "${pulseaudio-control} togmute";
           click-middle = "${pulseaudio-control} next-node";
@@ -352,9 +336,9 @@
           interval = 5;
           format-connected = "<label-connected>";
           format-disconnected = "<label-disconnected>";
-          label-disconnected = "睊 wifi off";
+          label-disconnected = "睊  off";
           interface-type = "wireless";
-          label-connected = "直 wifi on";
+          label-connected = "直  on";
           label-connected-foreground = "\${colors.primary}";
         };
 

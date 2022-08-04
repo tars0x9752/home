@@ -22,8 +22,16 @@
         cd ~/.config
       }
 
+      cd:git-top() {
+        g:cd.top
+      }
+
       copy() {
         xsel -bi
+      }
+
+      cya() {
+        shutdown -h now
       }
     '';
   };
