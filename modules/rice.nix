@@ -26,7 +26,8 @@
 
         gaps = {
           inner = 20;
-          smartGaps = true;
+          # smartGaps = true;
+          smartBorders = "on";
         };
 
         menu = "${config.programs.rofi.package}/bin/rofi -show drun";
