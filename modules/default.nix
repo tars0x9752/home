@@ -11,6 +11,7 @@
     ./gpg.nix
     ./neovim
     ./starship
+    ./neofetch.nix
 
     # shell
     ./bash

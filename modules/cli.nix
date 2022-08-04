@@ -21,7 +21,6 @@
     gettext
     gh
     polkit_gnome
-    cava
 
     # util replacement
     bat
@@ -32,12 +31,14 @@
     fzf
     dua
 
+    # media
+    cava
+    feh
+
+    # fm
+    ranger
+
     # gemini
     amfora
-
-    # other
-    neofetch
-    cowsay
-    hello
   ];
 }

@@ -7,5 +7,7 @@
     extraConfig = ''
       pinentry-program ${pkgs.pinentry-qt}/bin/pinentry
     '';
+
+    # gpg-agent.enableBashIntegration はデフォルトで true
   };
 }

@@ -5,7 +5,10 @@
     discord
     element-desktop
     firefox
-    # keeweb # configuration.nix で services.gnome.gnome-keyring.enable = true; が必要
+    keeweb # configuration.nix で services.gnome.gnome-keyring.enable = true; が必要
+    xfce.thunar
+    lxappearance
+    vscode
   ];
 
   xdg.mimeApps = {
