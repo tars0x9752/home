@@ -22,6 +22,10 @@ update:
 update-lock-only:
 	nix flake update
 
+.PHONY: os-switch
+os-switch:
+	sudo nixos-rebuild switch -I nixos-config=./nixos/configuration.nix
+
 .PHONY: gc
 gc:
 	nix-collect-garbage
