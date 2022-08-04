@@ -10,7 +10,7 @@
     
     return {
       font_size = 16,
-      color_scheme = 'Molokai',
+      color_scheme = 'Ayu Mirage',
       window_background_opacity = 0.85,
     }
   '';

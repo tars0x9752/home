@@ -5,6 +5,7 @@
     enable = true;
 
     plugins = with pkgs.vimPlugins; [
+      vim-nix
       lualine-nvim
       vim-devicons
       auto-pairs
@@ -13,6 +14,7 @@
       nerdtree
       iceberg-vim
       molokai
+      neovim-ayu
     ];
 
     extraConfig = ''
@@ -24,7 +26,7 @@
       END
 
       " --- visual ---
-      colorscheme molokai
+      colorscheme ayu-mirage
       set background=dark
       set termguicolors
       set title
@@ -34,6 +36,12 @@
       set matchtime=3
       set list "不可視文字の可視化
       " set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
+
+      highlight Normal ctermbg=none guibg=NONE
+      highlight NonText ctermbg=none guibg=NONE
+      highlight LineNr ctermbg=none guibg=NONE
+      highlight Folded ctermbg=none guibg=NONE
+      highlight EndOfBuffer ctermbg=none guibg=NONE
 
       " --- grep ---
       set ignorecase
