@@ -10,5 +10,5 @@ let
     };
 in
 {
-  home.packages = [ doom-emacs ];
+  # home.packages = [ doom-emacs ];
 }

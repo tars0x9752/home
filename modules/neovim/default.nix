@@ -5,19 +5,26 @@
     enable = true;
 
     plugins = with pkgs.vimPlugins; [
-      vim-airline
+      lualine-nvim
       vim-devicons
       auto-pairs
       plenary-nvim
       telescope-nvim
       nerdtree
       iceberg-vim
-      sonokai
+      molokai
     ];
 
     extraConfig = ''
+      " --- lualine ---
+      lua << END
+      require('lualine').setup {
+        options = { theme  = 'ayu_mirage' },
+      }
+      END
+
       " --- visual ---
-      colorscheme iceberg
+      colorscheme molokai
       set background=dark
       set termguicolors
       set title

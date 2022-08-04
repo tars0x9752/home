@@ -9,7 +9,7 @@
     local wezterm = require 'wezterm'
     
     return {
-      font_size = 18,
+      font_size = 16,
       color_scheme = 'Molokai',
       window_background_opacity = 0.85,
     }

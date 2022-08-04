@@ -11,7 +11,6 @@
     ./gpg.nix
     ./neovim
     ./starship
-    ./doom-emacs
 
     # shell
     ./bash

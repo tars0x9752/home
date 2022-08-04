@@ -207,171 +207,192 @@
       # githubSupport = true;
     };
 
-    config = {
-      "colors" = {
-        background = "#252a34";
-        background-alt = "#3b4354";
-        foreground = "#F1FAEE";
-        primary = "#08D9D6";
-        secondary = "#047672";
-        alert = "#ff2e63";
-        disabled = "#707880";
+    config =
+      let
+        pulseaudio-control = "${pkgs.callPackage ./pulseaudio-control.nix { } }/bin/pulseaudio-control";
+      in
+      {
+        "colors" = {
+          background = "#252a34";
+          background-alt = "#3b4354";
+          foreground = "#F1FAEE";
+          primary = "#08D9D6";
+          secondary = "#047672";
+          alert = "#ff2e63";
+          disabled = "#707880";
+        };
+
+        "bar/top" = {
+          width = "100%";
+          height = "24pt";
+          radius = 6;
+
+          background = "\${colors.background}";
+          foreground = "\${colors.foreground}";
+
+          line-size = "3pt";
+
+          border-size = "4pt";
+          border-color = "#00000000";
+
+          padding-left = 0;
+          padding-right = 1;
+
+          module-margin = 1;
+
+          separator = "|";
+          separator-foreground = "\${colors.disabled}";
+
+          font-0 = "JetBrainsMono Nerd Font:style=Regular:size=16;5";
+
+          modules-left = "xworkspaces xwindow";
+          modules-right = "filesystem pulseaudio-control-output xkeyboard memory cpu wlan date battery";
+
+          cursor-click = "pointer";
+          cursor-scroll = "ns-resize";
+
+          enable-ipc = true;
+        };
+
+        "module/xworkspaces" = {
+          type = "internal/xworkspaces";
+          label-active = "%name%";
+          label-active-background = "\${colors.background-alt}";
+          label-active-underline = "\${colors.primary}";
+          label-active-padding = 1;
+
+          label-occupied = "%name%";
+          label-occupied-padding = 1;
+
+          label-urgent = "%name%";
+          label-urgent-background = "\${colors.alert}";
+          label-urgent-padding = 1;
+
+          label-empty = "%name%";
+          label-empty-foreground = "\${colors.disabled}";
+          label-empty-padding = 1;
+        };
+
+        "module/xwindow" = {
+          type = "internal/xwindow";
+          label = "%title:0:60:...%";
+        };
+
+        "module/filesystem" = {
+          type = "internal/fs";
+          interval = 25;
+          mount-0 = "/";
+          label-mounted = "%{F#08D9D6} %{F-} %percentage_used%%";
+          label-unmounted = "%mountpoint% not mounted";
+          label-unmounted-foreground = "\${colors.disabled}";
+        };
+
+        # "module/pulseaudio" = {
+        #   type = "internal/pulseaudio";
+
+        #   # 違うsinkや違うマシンで使う場合は変更する or この行を消して pactl 等でデフォルトの sink を変更する
+        #   sink = "alsa_output.pci-0000_00_1f.3.analog-stereo";
+
+        #   format-volume-prefix = "VOL ";
+        #   format-volume-prefix-foreground = "\${colors.primary}";
+        #   format-volume = "<label-volume>";
+
+        #   label-volume = "%percentage%%";
+        #   label-muted = "muted";
+        #   label-muted-foreground = "\${colors.disabled}";
+        # };
+
+        "module/pulseaudio-control-output" = {
+          type = "custom/script";
+          tail = true;
+          format-underline = "\${colors.primary}";
+          label-padding = 2;
+          label-foreground = "\${colors.foreground}";
+
+          # 必要に応じて nickname および sink や source 名(node名)を変更すること
+          exec = ''${pulseaudio-control} --icons-volume " , " --icon-muted " " --node-nicknames-from "device.description" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:  Speakers" listen'';
+          click-right = "exec ${pkgs.pavucontrol}/bin/pavucontrol &";
+          click-left = "${pulseaudio-control} togmute";
+          click-middle = "${pulseaudio-control} next-node";
+          scroll-up = "${pulseaudio-control} --volume-max 130 up";
+          scroll-down = "${pulseaudio-control} --volume-max 130 down";
+        };
+
+        "module/xkeyboard" = {
+          type = "internal/xkeyboard";
+          blacklist-0 = "num lock";
+
+          label-layout = "%layout%";
+          label-layout-foreground = "\${colors.primary}";
+
+          label-indicator-padding = 2;
+          label-indicator-margin = 1;
+          label-indicator-foreground = "\${colors.background}";
+          label-indicator-background = "\${colors.secondary}";
+        };
+
+        "module/memory" = {
+          type = "internal/memory";
+          interval = 2;
+          format-prefix = "RAM ";
+          format-prefix-foreground = "\${colors.primary}";
+          label = "%percentage_used:2%%";
+        };
+
+        "module/cpu" = {
+          type = "internal/cpu";
+          interval = 2;
+          format-prefix = "CPU ";
+          format-prefix-foreground = "\${colors.primary}";
+          label = "%percentage:2%%";
+        };
+
+        "module/wlan" = {
+          type = "internal/network";
+          interval = 5;
+          format-connected = "<label-connected>";
+          format-disconnected = "<label-disconnected>";
+          label-disconnected = "睊 wifi off";
+          interface-type = "wireless";
+          label-connected = "直 wifi on";
+          label-connected-foreground = "\${colors.primary}";
+        };
+
+        "module/date" = {
+          type = "internal/date";
+          interval = 1;
+          date = "%H:%M";
+          date-alt = "%Y-%m-%d %H:%M:%S";
+          label = "%date%";
+          label-foreground = "\${colors.primary}";
+        };
+
+        "module/battery" = {
+          type = "internal/battery";
+          battery = "BAT1";
+          adapter = "ACAD";
+          full-at = 99;
+          format-charging = "<label-charging>";
+          format-charging-foreground = "\${colors.primary}";
+          format-charging-background = "\${colors.background}";
+          format-full = "<label-full>";
+          format-full-foreground = "\${colors.primary}";
+          format-full-background = "\${colors.background}";
+          format-discharging = "<label-discharging>";
+          format-discharging-foreground = "\${colors.primary}";
+          format-discharging-background = "\${colors.background}";
+          label-charging = "  %percentage%% ";
+          label-discharging = "  %percentage%% ";
+          label-discharging-foreground = "\${colors.primary}";
+          label-full = "  %percentage%% ";
+        };
+
+
+        "settings" = {
+          screenchange-reload = true;
+          pseudo-transparency = true;
+        };
       };
-
-      "bar/top" = {
-        width = "100%";
-        height = "24pt";
-        radius = 6;
-
-        background = "\${colors.background}";
-        foreground = "\${colors.foreground}";
-
-        line-size = "3pt";
-
-        border-size = "4pt";
-        border-color = "#00000000";
-
-        padding-left = 0;
-        padding-right = 1;
-
-        module-margin = 1;
-
-        separator = "|";
-        separator-foreground = "\${colors.disabled}";
-
-        font-0 = "JetBrainsMono Nerd Font:style=Regular:size=16;5";
-
-        modules-left = "xworkspaces xwindow";
-        modules-right = "filesystem pulseaudio xkeyboard memory cpu wlan date battery";
-
-        cursor-click = "pointer";
-        cursor-scroll = "ns-resize";
-
-        enable-ipc = true;
-      };
-
-      "module/xworkspaces" = {
-        type = "internal/xworkspaces";
-        label-active = "%name%";
-        label-active-background = "\${colors.background-alt}";
-        label-active-underline = "\${colors.primary}";
-        label-active-padding = 1;
-
-        label-occupied = "%name%";
-        label-occupied-padding = 1;
-
-        label-urgent = "%name%";
-        label-urgent-background = "\${colors.alert}";
-        label-urgent-padding = 1;
-
-        label-empty = "%name%";
-        label-empty-foreground = "\${colors.disabled}";
-        label-empty-padding = 1;
-      };
-
-      "module/xwindow" = {
-        type = "internal/xwindow";
-        label = "%title:0:60:...%";
-      };
-
-      "module/filesystem" = {
-        type = "internal/fs";
-        interval = 25;
-        mount-0 = "/";
-        label-mounted = "%{F#08D9D6} %mountpoint%%{F-} %percentage_used%%";
-        label-unmounted = "%mountpoint% not mounted";
-        label-unmounted-foreground = "\${colors.disabled}";
-      };
-
-      "module/pulseaudio" = {
-        type = "internal/pulseaudio";
-
-        sink = "alsa_output.pci-0000_00_1f.3.analog-stereo"; # 違うsinkや違うマシンで使う場合は要変更
-
-        format-volume-prefix = "VOL ";
-        format-volume-prefix-foreground = "\${colors.primary}";
-        format-volume = "<label-volume>";
-
-        label-volume = "%percentage%%";
-        label-muted = "muted";
-        label-muted-foreground = "\${colors.disabled}";
-      };
-
-      "module/xkeyboard" = {
-        type = "internal/xkeyboard";
-        blacklist-0 = "num lock";
-
-        label-layout = "%layout%";
-        label-layout-foreground = "\${colors.primary}";
-
-        label-indicator-padding = 2;
-        label-indicator-margin = 1;
-        label-indicator-foreground = "\${colors.background}";
-        label-indicator-background = "\${colors.secondary}";
-      };
-
-      "module/memory" = {
-        type = "internal/memory";
-        interval = 2;
-        format-prefix = "RAM ";
-        format-prefix-foreground = "\${colors.primary}";
-        label = "%percentage_used:2%%";
-      };
-
-      "module/cpu" = {
-        type = "internal/cpu";
-        interval = 2;
-        format-prefix = "CPU ";
-        format-prefix-foreground = "\${colors.primary}";
-        label = "%percentage:2%%";
-      };
-
-      "module/wlan" = {
-        type = "internal/network";
-        interval = 5;
-        format-connected = "<label-connected>";
-        format-disconnected = "<label-disconnected>";
-        label-disconnected = "睊 wifi off";
-        interface-type = "wireless";
-        label-connected = "直 wifi on";
-        label-connected-foreground = "\${colors.primary}";
-      };
-
-      "module/date" = {
-        type = "internal/date";
-        interval = 1;
-        date = "%H:%M";
-        date-alt = "%Y-%m-%d %H:%M:%S";
-        label = "%date%";
-        label-foreground = "\${colors.primary}";
-      };
-
-      "module/battery" = {
-        type = "internal/battery";
-        battery = "BAT1";
-        adapter = "ACAD";
-        full-at = 99;
-        format-charging = "<label-charging>";
-        format-charging-foreground = "\${colors.primary}";
-        format-charging-background = "\${colors.background}";
-        format-full = "<label-full>";
-        format-full-foreground = "\${colors.primary}";
-        format-full-background = "\${colors.background}";
-        format-discharging = "<label-discharging>";
-        format-discharging-foreground = "\${colors.primary}";
-        format-discharging-background = "\${colors.background}";
-        label-charging = "  %percentage%% ";
-        label-discharging = "  %percentage%% ";
-        label-discharging-foreground = "\${colors.primary}";
-        label-full = "  %percentage%% ";
-      };
-
-
-      "settings" = {
-        screenchange-reload = true;
-        pseudo-transparency = true;
-      };
-    };
 
     script = "polybar top &";
   };
