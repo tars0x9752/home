@@ -1,20 +1,72 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   programs.neovim = {
     enable = true;
 
+    coc = {
+      enable = true;
+
+      pluginConfig = ''
+        nmap <silent> <space><space> :<C-u>CocList<cr>
+        nmap <silent> <space>h :<C-u>call CocAction('doHover')<cr>
+        nmap <silent> <space>d <Plug>(coc-definition)
+        nmap <silent> <space>rf <Plug>(coc-references)
+        nmap <silent> <space>rn <Plug>(coc-rename)
+        nmap <silent> <space>f <Plug>(coc-format)
+
+        let g:coc_user_config = {
+          \"suggest.completionItemKindLabels": {
+            \"class": "\uf0e8",
+            \"color": "\ue22b",
+            \"constant": "\uf8ff",
+            \"default": "\uf29c",
+            \"enum": "\uf435",
+            \"enumMember": "\uf02b",
+            \"event": "\ufacd",
+            \"field": "\uf93d",
+            \"file": "\uf471",
+            \"folder": "\uf115",
+            \"function": "\uf794",
+            \"interface": "\ufa52",
+            \"keyword": "\uf893",
+            \"method": "\uf6a6",
+            \"operator": "\uf915",
+            \"property": "\ufab6",
+            \"reference": "\uf87a",
+            \"snippet": "\uf64d",
+            \"struct": "\ufb44",
+            \"text": "\ue612",
+            \"typeParameter": "\uf278",
+            \"unit": "\uf475",
+            \"value": "\uf8a3",
+            \"variable": "\uf71b"
+          \}
+        \}
+      '';
+    };
+
     plugins = with pkgs.vimPlugins; [
       vim-nix
       lualine-nvim
       vim-devicons
-      auto-pairs
+      # auto-pairs
       plenary-nvim
       telescope-nvim
       nerdtree
       iceberg-vim
       molokai
       neovim-ayu
+
+      # coc
+      coc-json
+      coc-yaml
+      coc-html
+      coc-tsserver
+      coc-eslint
+      coc-pairs # or auto-pairs
+      coc-prettier
+      coc-lists
     ];
 
     extraConfig = ''

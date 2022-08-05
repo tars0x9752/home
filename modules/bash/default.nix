@@ -38,7 +38,7 @@
 
   xdg.configFile."bash/init.bash".source = ./init.bash;
 
-  xdg.configFile."bash/bin".source = ./bin;
+  # xdg.configFile."bash/bin".source = ./bin;
 
   home.sessionPath = [ "${config.home.homeDirectory}/.config/bash/bin" ];
 }

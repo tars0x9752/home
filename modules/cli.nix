@@ -21,6 +21,7 @@
     xclip
     gettext
     polkit_gnome
+    unzip
 
     # util replacement
     bat

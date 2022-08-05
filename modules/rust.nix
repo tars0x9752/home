@@ -1,11 +1,8 @@
 { config, pkgs, ... }:
 
-let
-  inherit (config.home) homeDirectory;
-in
 {
   home = {
-    packages = with pkgs; [ rustup ];
-    sessionPath = [ "${homeDirectory}/.cargo/bin" ];
+    packages = [ pkgs.rustup ];
+    sessionPath = [ "$HOME/.cargo/bin" ];
   };
 }

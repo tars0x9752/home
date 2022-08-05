@@ -11,20 +11,9 @@
   '';
 
   xdg.configFile."neofetch/config.conf".text = ''
-      # See this wiki page for more info:
+    # See this wiki page for more info:
     # https://github.com/dylanaraps/neofetch/wiki/Customizing-Info
     print_info() {
-        prin ""
-        prin ""
-        prin ""
-        prin ""
-        prin ""
-        prin ""
-        prin ""
-        prin ""
-        prin ""
-        prin ""
-
         info title
         info underline
 
