@@ -34,9 +34,12 @@
 
         terminal = "wezterm";
 
+        floating.criteria = [{ class = "Pavucontrol"; }];
+
         startup = [
           { command = "systemctl --user restart polybar"; always = true; notification = false; }
           { command = "xset r rate 200 30"; always = true; notification = false; }
+          { command = "xrandr --output HDMI-2 --auto --right-of eDP1"; notification = false; }
           {
             command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
             always = true;
@@ -90,6 +93,8 @@
         };
 
         window.border = 1; # 新規作成した window にのみ有効
+
+        workspaceOutputAssign = [{ output = "eDP-1-1"; workspace = "10"; }];
       };
     };
   };
@@ -259,7 +264,7 @@
           font-0 = "JetBrainsMono Nerd Font:style=Regular:size=16;5";
 
           modules-left = "xworkspaces xwindow";
-          modules-right = "filesystem pulseaudio-control-output xkeyboard memory cpu wlan date battery";
+          modules-right = "filesystem pulseaudio-control-output memory cpu wlan date battery";
 
           cursor-click = "pointer";
           cursor-scroll = "ns-resize";
@@ -288,7 +293,7 @@
 
         "module/xwindow" = {
           type = "internal/xwindow";
-          label = "%title:0:60:...%";
+          label = "%title:0:50:...%";
         };
 
         "module/filesystem" = {
@@ -307,25 +312,12 @@
           label-foreground = "\${colors.primary}";
 
           # 必要に応じて nickname および sink や source 名(node名)を変更すること
-          exec = ''${pulseaudio-control} --icons-volume " , " --icon-muted " " --node-nicknames-from "device.profile.name" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:蓼 Speakers" listen'';
+          exec = ''${pulseaudio-control} --icons-volume " , " --icon-muted " " --node-nicknames-from "device.profile.name" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:蓼 " listen'';
           click-right = "exec ${pkgs.pavucontrol}/bin/pavucontrol &";
           click-left = "${pulseaudio-control} togmute";
           click-middle = "${pulseaudio-control} next-node";
           scroll-up = "${pulseaudio-control} --volume-max 130 up";
           scroll-down = "${pulseaudio-control} --volume-max 130 down";
-        };
-
-        "module/xkeyboard" = {
-          type = "internal/xkeyboard";
-          blacklist-0 = "num lock";
-
-          label-layout = "%layout%";
-          label-layout-foreground = "\${colors.primary}";
-
-          label-indicator-padding = 2;
-          label-indicator-margin = 1;
-          label-indicator-foreground = "\${colors.background}";
-          label-indicator-background = "\${colors.secondary}";
         };
 
         "module/memory" = {
