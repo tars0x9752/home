@@ -9,6 +9,7 @@
     # util
     coreutils
     binutils
+    pciutils
     gawk
     gnumake
     gnused
