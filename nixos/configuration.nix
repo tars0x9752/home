@@ -73,6 +73,15 @@
     };
   };
 
+  hardware.nvidia.prime = {
+    # 基本的に nvidia カードに接続した外付けディスプレイを常に使用するので offload ではなく sync mode にしておく
+    sync.enable = true;
+
+    # Bus ID は lspci 等で確認できる
+    intelBusId = "PCI:0:2:0";
+    nvidiaBusId = "PCI:1:0:0";
+  };
+
   services.gnome.gnome-keyring.enable = true; # keeweb で必要
 
   # hardware.opengl.enable = true;
@@ -101,7 +110,6 @@
   environment.systemPackages = with pkgs; [
     # 最低限, home-manager がインストール済みかつ git と gnumake があれば dotfiles を git clone してきて make switch できる
     git
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     gnumake
     wget
     curl
