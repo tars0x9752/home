@@ -96,6 +96,8 @@
 
         workspaceOutputAssign = [{ output = "eDP-1-1"; workspace = "10"; }];
       };
+
+      extraConfig = ''for_window [all] title_window_icon padding 10px'';
     };
   };
 
@@ -240,7 +242,9 @@
           disabled = "#707880";
         };
 
-        "bar/top" = {
+        "bar/main" = {
+          monitor = "HDMI-0";
+
           width = "100%";
           height = "24pt";
           radius = 6;
@@ -270,6 +274,12 @@
           cursor-scroll = "ns-resize";
 
           enable-ipc = true;
+        };
+
+        "bar/side" = {
+          "inherit" = "bar/main";
+
+          monitor = "eDP-1-1";
         };
 
         "module/xworkspaces" = {
@@ -383,6 +393,6 @@
         };
       };
 
-    script = "polybar top &";
+    script = "polybar --reload main & polybar --reload side &";
   };
 }
