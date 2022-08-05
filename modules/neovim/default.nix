@@ -8,9 +8,8 @@
       enable = true;
 
       pluginConfig = ''
-        nmap <silent> <space><space> :<C-u>CocList<cr>
         nmap <silent> <space>h :<C-u>call CocAction('doHover')<cr>
-        nmap <silent> <space>d <Plug>(coc-definition)
+        nmap <silent> <space><space> <Plug>(coc-definition)
         nmap <silent> <space>rf <Plug>(coc-references)
         nmap <silent> <space>rn <Plug>(coc-rename)
         nmap <silent> <space>f <Plug>(coc-format)
@@ -49,13 +48,11 @@
     plugins = with pkgs.vimPlugins; [
       vim-nix
       lualine-nvim
-      vim-devicons
-      # auto-pairs
+      nvim-web-devicons
+      # auto-pairs # or coc-pairs
       plenary-nvim
       telescope-nvim
       nerdtree
-      iceberg-vim
-      molokai
       neovim-ayu
 
       # coc
@@ -71,9 +68,30 @@
 
     extraConfig = ''
       " --- lualine ---
+      set laststatus=0
+      
       lua << END
       require('lualine').setup {
         options = { theme  = 'ayu_mirage' },
+        sections = {
+          lualine_a = {'mode'},
+          lualine_b = {'branch'},
+          lualine_c = {'filename'},
+          lualine_x = {'encoding'},
+          lualine_y = {'fileformat'},
+          lualine_z = {'filetype'}
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {},
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {}
+        },
+        tabline = {},
+        winbar = {},
+        inactive_winbar = {}
       }
       END
 
@@ -81,13 +99,12 @@
       colorscheme ayu-mirage
       set background=dark
       set termguicolors
-      set title
       set number
+      set noruler
       set wrap
       set showmatch
       set matchtime=3
-      set list "不可視文字の可視化
-      " set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
+      set list
 
       highlight Normal ctermbg=none guibg=NONE
       highlight NonText ctermbg=none guibg=NONE
@@ -115,7 +132,6 @@
       set wildmode=list:longest
       set infercase
       set wildmenu
-      au FileType * setlocal formatoptions-=ro
 
       " --- other ---
       set mouse=a
