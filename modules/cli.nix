@@ -19,7 +19,6 @@
     xsel
     xclip
     gettext
-    gh
     polkit_gnome
 
     # util replacement
@@ -41,4 +40,8 @@
     # gemini
     amfora
   ];
+
+  programs.fzf = {
+    enable = true;
+  };
 }

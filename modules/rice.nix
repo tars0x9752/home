@@ -3,7 +3,7 @@
 
 {
   # wallpaper
-  xdg.configFile."wallpaper/wallpaper.png".source = ../wallpaper/valley.png;
+  xdg.configFile."wallpaper/wallpaper.jpg".source = ../wallpaper/cube.jpg;
 
   xsession = {
     enable = true;
@@ -43,7 +43,7 @@
             notification = false;
           }
           {
-            command = "${pkgs.feh}/bin/feh --bg-scale ${config.xdg.configHome}/wallpaper/wallpaper.png";
+            command = "${pkgs.feh}/bin/feh --bg-scale ${config.xdg.configHome}/wallpaper/wallpaper.jpg";
             always = true;
             notification = false;
           }

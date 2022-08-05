@@ -14,6 +14,13 @@ let
   PROTECTED_BRANCHES = concatStringsSep "|" [ DEFAULT_BRANCH DEFAULT_BRANCH_OLD DEVELOP_BRANCH DEVELOP_BRANCH_ABBREV ];
 in
 {
+  # gh auth login　時 readonly のエラー出るけど問題なし
+  # https://github.com/cli/cli/issues/4955
+  programs.gh = {
+    enable = true;
+    enableGitCredentialHelper = true;
+  };
+
   programs.git = {
     enable = true;
 
