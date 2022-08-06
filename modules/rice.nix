@@ -1,6 +1,25 @@
 { config, lib, pkgs, ... }:
 
+let
+  colors = {
+    # general
+    background = "#252a34";
+    background-alt = "#3b4354";
+    foreground = "#F1FAEE";
+    primary = "#08D9D6";
+    secondary = "#047672";
+    alert = "#ff2e63";
+    disabled = "#707880";
 
+    # rofi
+    bg0 = "#242424E6";
+    bg1 = "#7E7E7E80";
+    bg2 = "#0860f2E6";
+    fg0 = "#DEDEDE";
+    fg1 = "#FFFFFF";
+    fg2 = "#DEDEDE80";
+  };
+in
 {
   # wallpaper
   xdg.configFile."wallpaper/wallpaper.jpg".source = ../wallpaper/cube.jpg;
@@ -67,28 +86,28 @@
 
         colors = {
           focused = {
-            text = "#000000"; # タイトルのテキスト
-            background = "#08D9D6"; # タイトルの背景
-            border = "#08D9D6"; # タイトルのボーダー
-            childBorder = "#08D9D6"; # window全体のボーダー
-            indicator = "#ff2e63"; # vertical / horizontal のアレ
+            text = colors.primary; # タイトルのテキスト
+            background = colors.background-alt; # タイトルの背景
+            border = colors.primary; # タイトルのボーダー
+            childBorder = colors.primary; # window全体のボーダー
+            indicator = colors.alert; # vertical / horizontal のアレ
           };
 
           # コンテナの中に複数windowがあって, そのなかの最後にフォーカスされてたもの
           focusedInactive = {
-            text = "#F1FAEE"; # タイトルのテキスト
-            background = "#047672"; # タイトルの背景
-            border = "#047672"; # タイトルのボーダー
-            childBorder = "#047672"; # window全体のボーダー
-            indicator = "#ff2e63"; # vertical / horizontal のアレ
+            text = colors.foreground; # タイトルのテキスト
+            background = colors.background-alt; # タイトルの背景
+            border = colors.background-alt; # タイトルのボーダー
+            childBorder = colors.secondary; # window全体のボーダー
+            indicator = colors.alert; # vertical / horizontal のアレ
           };
 
           unfocused = {
-            text = "#F1FAEE"; # タイトルのテキスト
-            background = "#252a34"; # タイトルの背景
-            border = "#252a34"; # タイトルのボーダー
-            childBorder = "#252a34"; # window全体のボーダー
-            indicator = "#ff2e63"; # vertical / horizontal のアレ
+            text = colors.foreground; # タイトルのテキスト
+            background = colors.background; # タイトルの背景
+            border = colors.background; # タイトルのボーダー
+            childBorder = colors.background; # window全体のボーダー
+            indicator = colors.alert; # vertical / horizontal のアレ
           };
         };
 
@@ -123,12 +142,12 @@
       in
       {
         "*" = {
-          bg0 = mkL "#242424E6";
-          bg1 = mkL "#7E7E7E80";
-          bg2 = mkL "#0860f2E6";
-          fg0 = mkL "#DEDEDE";
-          fg1 = mkL "#FFFFFF";
-          fg2 = mkL "#DEDEDE80";
+          bg0 = mkL colors.bg0;
+          bg1 = mkL colors.bg1;
+          bg2 = mkL colors.bg2;
+          fg0 = mkL colors.fg0;
+          fg1 = mkL colors.fg1;
+          fg2 = mkL colors.fg2;
 
           background-color = mkL "transparent";
           text-color = mkL "@fg0";
@@ -224,7 +243,6 @@
       alsaSupport = true;
       pulseSupport = true;
       iwSupport = true;
-      # githubSupport = true;
     };
 
     config =
@@ -232,43 +250,34 @@
         pulseaudio-control = "${pkgs.callPackage ./pulseaudio-control.nix { } }/bin/pulseaudio-control";
       in
       {
-        "colors" = {
-          background = "#252a34";
-          background-alt = "#3b4354";
-          foreground = "#F1FAEE";
-          primary = "#08D9D6";
-          secondary = "#047672";
-          alert = "#ff2e63";
-          disabled = "#707880";
+        "global/wm" = {
+          margin-bottom = 0;
+          margin-top = 0;
         };
 
         "bar/main" = {
           monitor = "HDMI-0";
 
           width = "100%";
-          height = "24pt";
-          radius = 6;
+          height = 40;
 
-          background = "\${colors.background}";
-          foreground = "\${colors.foreground}";
+          background = "${colors.background}";
+          foreground = "${colors.foreground}";
 
-          line-size = "3pt";
+          # underline / overline
+          line-size = 2;
+          line-color = "${colors.primary}";
 
-          border-size = "4pt";
-          border-color = "#00000000";
+          border-size = 0;
 
-          padding-left = 0;
-          padding-right = 1;
+          padding = 0;
 
           module-margin = 1;
 
-          separator = "|";
-          separator-foreground = "\${colors.disabled}";
+          font-0 = "JetBrainsMono Nerd Font:style=Regular:size=14;4";
 
-          font-0 = "JetBrainsMono Nerd Font:style=Regular:size=16;5";
-
-          modules-left = "xworkspaces xwindow";
-          modules-right = "filesystem pulseaudio-control-output memory cpu wlan date battery";
+          modules-left = "oslogo xworkspaces xwindow";
+          modules-right = "pulseaudio-control-output filesystem memory cpu wlan battery date";
 
           cursor-click = "pointer";
           cursor-scroll = "ns-resize";
@@ -282,47 +291,75 @@
           monitor = "eDP-1-1";
         };
 
+        "module/oslogo" = {
+          type = "custom/text";
+          content = " NixOS";
+          content-foreground = "${colors.background}";
+          content-background = "${colors.primary}";
+          content-padding = 2;
+        };
+
         "module/xworkspaces" = {
           type = "internal/xworkspaces";
-          label-active = "%name%";
-          label-active-background = "\${colors.background-alt}";
-          label-active-underline = "\${colors.primary}";
-          label-active-padding = 1;
+          pin-workspaces = true;
+          enable-scroll = false;
+          icon-0 = "10;";
+          icon-1 = "1;";
+          icon-2 = "2;";
+          icon-3 = "3;";
+          icon-4 = "4;";
+          icon-5 = "5;";
+          icon-6 = "6;";
+          icon-7 = "7;";
+          icon-8 = "8;";
+          icon-9 = "9;";
+          icon-default = "";
 
-          label-occupied = "%name%";
-          label-occupied-padding = 1;
+          format = "<label-state>";
 
-          label-urgent = "%name%";
-          label-urgent-background = "\${colors.alert}";
-          label-urgent-padding = 1;
+          label-active = "%icon%";
+          label-active-foreground = "${colors.primary}";
+          label-active-background = "${colors.background-alt}";
+          label-active-underline = "${colors.primary}";
 
-          label-empty = "%name%";
-          label-empty-foreground = "\${colors.disabled}";
-          label-empty-padding = 1;
+          label-occupied = "%icon%";
+
+          label-urgent = "%icon%";
+          label-urgent-foreground = "${colors.alert}";
+
+          label-empty = "%icon%";
+          label-empty-foreground = "${colors.disabled}";
+
+          label-active-padding = 2;
+          label-occupied-padding = 2;
+          label-urgent-padding = 2;
+          label-empty-padding = 2;
         };
 
         "module/xwindow" = {
           type = "internal/xwindow";
-          label = "%title:0:50:...%";
+          label = "%title:0:40:...%";
+          format = "<label>";
+          format-prefix = "  ";
+          format-prefix-foreground = "${colors.primary}";
+          label-empty = "NixOS";
         };
 
         "module/filesystem" = {
           type = "internal/fs";
           interval = 25;
           mount-0 = "/";
-          label-mounted = "%{F#08D9D6} %{F-} %percentage_used%%";
+          label-mounted = "%{F${colors.primary}}DISK:%{F-} %percentage_used:2%%";
           label-unmounted = "%mountpoint% not mounted";
-          label-unmounted-foreground = "\${colors.disabled}";
+          label-unmounted-foreground = "${colors.disabled}";
         };
 
         "module/pulseaudio-control-output" = {
           type = "custom/script";
           tail = true;
-          label-padding = 1;
-          label-foreground = "\${colors.primary}";
 
           # 必要に応じて nickname および sink や source 名(node名)を変更すること
-          exec = ''${pulseaudio-control} --icons-volume " , " --icon-muted " " --node-nicknames-from "device.profile.name" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:蓼 " listen'';
+          exec = ''${pulseaudio-control} --icons-volume "%{F${colors.primary}} %{F-},%{F${colors.primary}} %{F-}" --icon-muted "%{F${colors.disabled}} %{F-}" --node-nicknames-from "device.profile.name" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:speakers " listen'';
           click-right = "exec ${pkgs.pavucontrol}/bin/pavucontrol &";
           click-left = "${pulseaudio-control} togmute";
           click-middle = "${pulseaudio-control} next-node";
@@ -333,37 +370,42 @@
         "module/memory" = {
           type = "internal/memory";
           interval = 2;
-          format-prefix = "RAM ";
-          format-prefix-foreground = "\${colors.primary}";
+          format-prefix = "RAM: ";
+          format-prefix-foreground = "${colors.primary}";
           label = "%percentage_used:2%%";
         };
 
         "module/cpu" = {
           type = "internal/cpu";
           interval = 2;
-          format-prefix = "CPU ";
-          format-prefix-foreground = "\${colors.primary}";
+          format-prefix = "CPU: ";
+          format-prefix-foreground = "${colors.primary}";
           label = "%percentage:2%%";
         };
 
         "module/wlan" = {
           type = "internal/network";
           interval = 5;
+          interface-type = "wireless";
           format-connected = "<label-connected>";
           format-disconnected = "<label-disconnected>";
-          label-disconnected = "睊  off";
-          interface-type = "wireless";
-          label-connected = "直  on";
-          label-connected-foreground = "\${colors.primary}";
+          label-connected = "on";
+          label-disconnected = "off";
+          format-connected-prefix = "直 ";
+          format-connected-prefix-foreground = "${colors.primary}";
+          format-disconnected-prefix = "睊 ";
         };
 
         "module/date" = {
           type = "internal/date";
           interval = 1;
-          date = "%H:%M";
-          date-alt = "%Y-%m-%d %H:%M:%S";
+          date = "%Y-%m-%d %H:%M";
           label = "%date%";
-          label-foreground = "\${colors.primary}";
+          format = "<label>";
+          format-prefix = " ";
+          format-foreground = "${colors.background}";
+          format-background = "${colors.primary}";
+          format-padding = 2;
         };
 
         "module/battery" = {
@@ -371,22 +413,20 @@
           # ls -1 /sys/class/power_supply/
           battery = "BAT1";
           adapter = "ACAD";
-          full-at = 99;
-          format-charging = "<label-charging>";
-          format-charging-foreground = "\${colors.primary}";
-          format-charging-background = "\${colors.background}";
-          format-full = "<label-full>";
-          format-full-foreground = "\${colors.primary}";
-          format-full-background = "\${colors.background}";
-          format-discharging = "<label-discharging>";
-          format-discharging-foreground = "\${colors.primary}";
-          format-discharging-background = "\${colors.background}";
-          label-charging = "  %percentage%% ";
-          label-discharging = "  %percentage%% ";
-          label-discharging-foreground = "\${colors.primary}";
-          label-full = "  %percentage%% ";
-        };
 
+          label-charging = "%percentage%%";
+          label-discharging = "%percentage%%";
+          label-full = "%percentage%%";
+          format-charging = "<label-charging>";
+          format-discharging = "<label-discharging>";
+          format-full = "<label-full>";
+          format-charging-prefix = " ";
+          format-discharging-prefix = " ";
+          format-full-prefix = " ";
+          format-charging-prefix-foreground = "${colors.primary}";
+          format-discharging-prefix-foreground = "${colors.primary}";
+          format-full-prefix-foreground = "${colors.primary}";
+        };
 
         "settings" = {
           screenchange-reload = true;
