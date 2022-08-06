@@ -5,11 +5,6 @@
     neofetch
   ];
 
-  # nixos の logo で使われる ascii colors は最初の2つだけ(oldの場合は1つだけ)だけど一応6つ指定しておく.
-  programs.bash.initExtra = ''
-    alias neofetch="neofetch --ascii_bold off --ascii_distro nixos_old --ascii_colors 1 1 1 1 1 1"
-  '';
-
   xdg.configFile."neofetch/config.conf".text = ''
     # See this wiki page for more info:
     # https://github.com/dylanaraps/neofetch/wiki/Customizing-Info
@@ -27,6 +22,7 @@
         info "$(color 4)Terminal" term
         info "$(color 4)CPU" cpu
         info "$(color 4)GPU" gpu
+        info "$(color 4)Disk" disk
         info "$(color 4)Memory" memory
 
         # info "GPU Driver" gpu_driver  # Linux/macOS only
@@ -79,7 +75,7 @@
     # Values:   'on', 'tiny', 'off'
     # Flag:     --distro_shorthand
     # Supports: Everything except Windows and Haiku
-    distro_shorthand="off"
+    distro_shorthand="on"
 
     # Show/Hide OS Architecture.
     # Show 'x86_64', 'x86' and etc in 'Distro:' output.
@@ -201,7 +197,7 @@
     # Example:
     # on:    'i7-6500U (4) @ 3.1GHz'
     # off:   'i7-6500U (4) @ 3.100GHz'
-    speed_shorthand="off"
+    speed_shorthand="on"
 
     # Enable/Disable CPU brand in output.
     #
@@ -400,7 +396,7 @@
     # disk_show=('/'):
     #      'Disk (/): 74G / 118G (66%)'
     #
-    disk_show=('/')
+    disk_show=('/' '/home')
 
     # Disk subtitle.
     # What to append to the Disk subtitle.
