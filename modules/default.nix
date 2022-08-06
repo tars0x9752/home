@@ -13,6 +13,7 @@
     ./starship
     ./neofetch.nix
     ./cava.nix
+    ./cxxmatrix.nix
 
     # shell
     ./bash

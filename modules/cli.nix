@@ -5,6 +5,8 @@
     # nix
     rnix-lsp
     nixpkgs-fmt
+    nix-prefetch-git
+    nix-prefetch-github
 
     # util
     coreutils
