@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  colors = {
+  colors = rec {
     # general
     background = "#252a34";
     background-alt = "#3b4354";
@@ -12,12 +12,12 @@ let
     disabled = "#707880";
 
     # rofi
-    bg0 = "#242424E6";
-    bg1 = "#7E7E7E80";
-    bg2 = "#0860f2E6";
+    bg0 = "${colors.background}E6";
+    bg1 = "${colors.background-alt}80";
+    bg2 = "${colors.primary}E6";
     fg0 = "#DEDEDE";
-    fg1 = "#FFFFFF";
-    fg2 = "#DEDEDE80";
+    fg1 = "${colors.foreground}";
+    fg2 = "${colors.disabled}80";
   };
 in
 {
@@ -78,11 +78,15 @@ in
 
         keybindings =
           let
+            main-display-g = "1920x1080+1920+0";
+          in
+          let
             modifier = config.xsession.windowManager.i3.config.modifier;
           in
           lib.mkOptionDefault {
             "${modifier}+c" = ''exec --no-startup-id "rofi -show calc -modi calc -no-show-match -no-sort > /dev/null"'';
             "${modifier}+z" = ''exec --no-startup-id "rofi -modi emoji -show emoji"'';
+            "${modifier}+p" = ''exec --no-startup-id "maim -g ${main-display-g} $HOME/screenshots/$(date --iso-8601='seconds')"'';
           };
 
         colors = {

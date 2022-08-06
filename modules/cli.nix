@@ -36,6 +36,10 @@
     # media
     feh
     tty-clock
+    maim
+    zbar
+    imagemagick
+    qrencode
 
     # fm
     ranger
