@@ -19,6 +19,8 @@
     wget
     xsel
     xclip
+    xdotool
+    copyq
     gettext
     polkit_gnome
     unzip

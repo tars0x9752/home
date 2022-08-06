@@ -44,7 +44,7 @@ in
         };
 
         gaps = {
-          inner = 20;
+          inner = 10;
           # smartGaps = true;
           smartBorders = "on";
         };
@@ -82,6 +82,7 @@ in
           in
           lib.mkOptionDefault {
             "${modifier}+c" = ''exec --no-startup-id "rofi -show calc -modi calc -no-show-match -no-sort > /dev/null"'';
+            "${modifier}+z" = ''exec --no-startup-id "rofi -modi emoji -show emoji"'';
           };
 
         colors = {
@@ -130,10 +131,9 @@ in
     enable = true;
 
     package = with pkgs; rofi.override { plugins = [ rofi-calc rofi-emoji ]; };
-
     extraConfig = {
       show-icons = true;
-      modi = "drun,emoji";
+      modi = "drun,emoji,calc";
     };
 
     theme =
@@ -277,7 +277,7 @@ in
           font-0 = "JetBrainsMono Nerd Font:style=Regular:size=14;4";
 
           modules-left = "oslogo xworkspaces xwindow";
-          modules-right = "pulseaudio-control-output filesystem memory cpu wlan battery date";
+          modules-right = "filesystem memory cpu pulseaudio-control-output wlan battery date";
 
           cursor-click = "pointer";
           cursor-scroll = "ns-resize";
@@ -359,12 +359,14 @@ in
           tail = true;
 
           # 必要に応じて nickname および sink や source 名(node名)を変更すること
-          exec = ''${pulseaudio-control} --icons-volume "%{F${colors.primary}} %{F-},%{F${colors.primary}} %{F-}" --icon-muted "%{F${colors.disabled}} %{F-}" --node-nicknames-from "device.profile.name" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:speakers " listen'';
+          # --color-muted は # なしの rrggbb のため # を取り除く
+          exec = ''${pulseaudio-control} --format '$VOL_ICON $VOL_LEVEL $NODE_NICKNAME' --color-muted "${builtins.replaceStrings ["#"] [""] colors.disabled}" --icons-volume " , " --icon-muted " " --node-nicknames-from "device.profile.name" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:built-in" listen'';
           click-right = "exec ${pkgs.pavucontrol}/bin/pavucontrol &";
           click-left = "${pulseaudio-control} togmute";
           click-middle = "${pulseaudio-control} next-node";
           scroll-up = "${pulseaudio-control} --volume-max 130 up";
           scroll-down = "${pulseaudio-control} --volume-max 130 down";
+          label-foreground = "${colors.primary}";
         };
 
         "module/memory" = {
@@ -394,6 +396,8 @@ in
           format-connected-prefix = "直 ";
           format-connected-prefix-foreground = "${colors.primary}";
           format-disconnected-prefix = "睊 ";
+          format-disconnected-foreground = "${colors.disabled}";
+          format-disconnected-prefix-foreground = "${colors.disabled}";
         };
 
         "module/date" = {
@@ -414,9 +418,9 @@ in
           battery = "BAT1";
           adapter = "ACAD";
 
-          label-charging = "%percentage%%";
-          label-discharging = "%percentage%%";
-          label-full = "%percentage%%";
+          label-charging = "%percentage:3%%";
+          label-discharging = "%percentage:3%%";
+          label-full = "%percentage:3%%";
           format-charging = "<label-charging>";
           format-discharging = "<label-discharging>";
           format-full = "<label-full>";

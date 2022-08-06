@@ -30,6 +30,22 @@
         xsel -bi
       }
 
+      wifi:on() {
+        nmcli radio wifi on
+      }
+
+      wifi:off() {
+        nmcli radio wifi off
+      }
+
+      r:calc() {
+        rofi -show calc -modi calc -no-show-match -no-sort
+      }
+
+      r:emoji() {
+        rofi -modi emoji -show emoji
+      }
+
       cya() {
         shutdown -h now
       }
