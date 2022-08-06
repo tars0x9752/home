@@ -46,6 +46,14 @@
         rofi -modi emoji -show emoji
       }
 
+      show:audio-visualizer() {
+        cava
+      }
+
+      show:clock() {
+        tty-clock -c -C 4
+      }
+
       cya() {
         shutdown -h now
       }

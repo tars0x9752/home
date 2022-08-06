@@ -34,8 +34,8 @@
     dua
 
     # media
-    cava
     feh
+    tty-clock
 
     # fm
     ranger

@@ -12,6 +12,7 @@
     ./neovim
     ./starship
     ./neofetch.nix
+    ./cava.nix
 
     # shell
     ./bash
