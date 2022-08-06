@@ -368,6 +368,7 @@
 
         "module/battery" = {
           type = "internal/battery";
+          # ls -1 /sys/class/power_supply/
           battery = "BAT1";
           adapter = "ACAD";
           full-at = 99;
