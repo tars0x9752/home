@@ -29,7 +29,6 @@
     lsd
     ripgrep
     fd
-    fzf
     dua
 
     # media
