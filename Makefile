@@ -33,7 +33,7 @@ update-lock-only:
 
 .PHONY: os-switch
 os-switch:
-	sudo nixos-rebuild switch -I nixos-config=./nixos/configuration.nix
+	sudo nixos-rebuild switch --flake '.#tars' --impure
 
 .PHONY: gc
 gc:

@@ -18,6 +18,11 @@
     {
       formatter.${system} = pkgs.nixpkgs-fmt;
 
+      nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [ ./nixos/configuration.nix ];
+      };
+
       homeConfigurations.${hostname} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
