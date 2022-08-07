@@ -86,7 +86,7 @@ in
           lib.mkOptionDefault {
             "${modifier}+c" = ''exec --no-startup-id "rofi -show calc -modi calc -no-show-match -no-sort > /dev/null"'';
             "${modifier}+z" = ''exec --no-startup-id "rofi -modi emoji -show emoji"'';
-            "${modifier}+p" = ''exec --no-startup-id "maim -g ${main-display-g} $HOME/screenshots/$(date --iso-8601='seconds')"'';
+            "${modifier}+p" = ''exec --no-startup-id "maim -g ${main-display-g} $HOME/screenshots/$(date --iso-8601='seconds').png"'';
           };
 
         colors = {
