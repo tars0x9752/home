@@ -8,6 +8,10 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 
 > However, the home-manager part also uses user and environment specific settings (user names, device names and such), so it is necessary to make adjustments according to your environment.
 
+## Screenshots
+
+<a href="./screenshots/home.png"><img src="./screenshots/home.png" height="700" ></a>
+
 ## Initial set up
 
 > NOTE: It assumes Nix Flakes feature is available.
