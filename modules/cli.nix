@@ -26,6 +26,7 @@
     gettext
     polkit_gnome
     unzip
+    figlet
 
     # util replacement
     bat

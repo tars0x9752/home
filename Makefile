@@ -1,3 +1,7 @@
+.PHONY: hello
+hello:
+	nix run '.#figlet' -- -f isometric1 -c "Hello World"
+
 .PHONY: ls-pkg
 ls-pkg:
 	home-manager packages
@@ -9,6 +13,11 @@ ls-gen:
 .PHONY: fmt
 fmt:
 	nix fmt
+
+.PHONY: install
+install: export HOME_MANAGER_BACKUP_EXT = old
+install:
+	nix run '.#activate/tars'
 
 .PHONY: switch
 switch:

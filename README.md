@@ -1,8 +1,8 @@
 # home
 
-**NixOS/Nix | home-manager | i3wm | polybar | rofi | wezterm | bash with ble.sh**
+**NixOS/Nix/Flakes | home-manager | i3wm | polybar | rofi | wezterm | bash with ble.sh**
 
-My home nix configs/dotfiles with `home-manager`(standalone) and `configuration.nix`. Still a ways to go. (It will remain a work in progress forever)
+My home nix configs/dotfiles with `home-manager`(standalone mode) and `configuration.nix`. Still a ways to go. (It will remain a work in progress forever.)
 
 Basically, I let home-manager manage most of the stuff except NixOS system-specific settings. NixOS system-specific settings are in `configuration.nix`. If it's not NixOS you can simply use only the home-manager part.
 
@@ -10,21 +10,21 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 
 ## Initial set up
 
+> NOTE: It assumes Nix Flakes feature is available.
+
 ### NixOS
 
-- [install home-manager](https://nix-community.github.io/home-manager/index.html#sec-install-standalone)
 - git clone and cd into this repository
 - `make os-switch`
   - or manually do `sudo nixos-rebuild switch -I nixos-config=./nixos/configuration.nix`
-- `make switch`
+- `make install` to install home-manager itself and apply the home configuration
 - `reboot`
 
 ### Non-NixOS (x86_64-linux)
 
 - [install nix](https://nixos.org/download.html#nix-install-linux)
-- [install home-manager](https://nix-community.github.io/home-manager/index.html#sec-install-standalone)
 - git clone and cd into this repository
-- `make switch`
+- `make install` to install home-manager itself and apply the home configuration
 - `reboot`
 
 ## Utility commands

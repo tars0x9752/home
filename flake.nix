@@ -9,20 +9,46 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      hostname = "tars";
     in
     {
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
+      formatter.${system} = pkgs.nixpkgs-fmt;
 
-      homeConfigurations.tars = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.${hostname} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         modules = [
           ./home.nix
         ];
+      };
+
+      # https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-run.html?highlight=apps.%3Csystem%3E#apps
+      # https://nix-community.github.io/home-manager/index.html#sec-flakes-standalone
+      apps.${system} = {
+        "activate/${hostname}" =
+          let
+            drv = self.outputs.homeConfigurations.${hostname}.activationPackage;
+            exePath = "/activate";
+          in
+          {
+            type = "app";
+            program = "${drv}${exePath}";
+          };
+
+        # just for fun
+        "figlet" =
+          let
+            drv = pkgs.figlet;
+            exePath = "/bin/figlet";
+          in
+          {
+            type = "app";
+            program = "${drv}${exePath}";
+          };
       };
     };
 }
