@@ -7,9 +7,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    devshell.url = "github:numtide/devshell";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, flake-utils, devshell, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -55,5 +57,127 @@
             program = "${drv}${exePath}";
           };
       };
-    };
+    } //
+    # currently my home configs support only x86_64-linux.
+    # So eachDefaultSystem doesn't mean much, but it's harmless as it is & I want to remember flake-utils is a thing, so I'll leave it here.
+    flake-utils.lib.eachDefaultSystem
+      (system: {
+        # Trying devShell as a better alternative to Makefile.
+        # https://github.com/numtide/devshell
+        devShell =
+          let
+            pkgs = import nixpkgs {
+              inherit system;
+
+              overlays = [ devshell.overlay ];
+            };
+          in
+          pkgs.devshell.mkShell {
+            devshell.motd = ''
+              {bold}{14}🔨 My home conigs 🔨{reset}
+              $(type -p menu &>/dev/null && menu)
+            '';
+
+            commands = [
+              # --- Fun ---
+              {
+                name = "hello-world";
+                category = "Fun";
+                help = "Print a nice hello world";
+                command = ''
+                  nix run '.#figlet' -- -f isometric1 -c "Hello World"
+                '';
+              }
+
+              # --- Initial Setup ---
+              {
+                name = "install";
+                category = "Initial Setup";
+                help = "Install home-manager itself and apply the home configuration";
+                command = ''
+                  export HOME_MANAGER_BACKUP_EXT=old
+                  nix run '.#activate/tars'
+                '';
+              }
+
+              # --- Home Environment ---
+              {
+                name = "ls-pkg";
+                category = "Home";
+                help = "List all packages installed in home-manager-path";
+                command = ''
+                  home-manager packages
+                '';
+              }
+              {
+                name = "ls-gen";
+                category = "Home";
+                help = "List all home environment generations";
+                command = ''
+                  home-manager generations
+                '';
+              }
+              {
+                name = "switch";
+                category = "Home";
+                help = "Switch home-manager to apply home config changes";
+                command = ''
+                  home-manager switch --flake '.#tars' -b bck --impure
+                '';
+              }
+              {
+                name = "update";
+                category = "Home";
+                help = "Update things";
+                command = ''
+                  home-manager switch --flake '.#tars' -b bck --impure --recreate-lock-file
+                '';
+              }
+              {
+                name = "update-lock-only";
+                category = "Home";
+                help = "Update the flake lock file only";
+                command = ''
+                  nix flake update
+                '';
+              }
+
+              # --- NixOS ---
+              {
+                name = "os-switch";
+                category = "NixOS";
+                help = "Switch nixos to rebuild and apply `configuration.nix` changes";
+                command = ''
+                  sudo nixos-rebuild switch --flake '.#tars' --impure
+                '';
+              }
+
+              # --- Utility ---
+              {
+                name = "fmt";
+                category = "Utility";
+                help = "Format nix files";
+                command = ''
+                  nix fmt
+                '';
+              }
+              {
+                name = "gc";
+                category = "Utility";
+                help = "Garbage collection";
+                command = ''
+                  nix-collect-garbage
+                '';
+              }
+              {
+                name = "gc-all-gen";
+                category = "Utility";
+                help = ''Delete old generations and garbage collection'';
+                command = ''
+                  nix-collect-garbage -d
+                '';
+              }
+            ];
+          };
+      });
 }
