@@ -33,6 +33,8 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 
 ## Utility commands
 
+> NOTE: At first I used Makefile for these commands, but now I've added the devShell commands as well. So you can also use `nix develop` and the devShell commands instead of make. Run `nix develop` then `menu` to see available devShell commands.
+
 ### Switch
 
 ```sh
