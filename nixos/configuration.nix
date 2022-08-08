@@ -46,11 +46,6 @@
     LC_TIME = "ja_JP.utf8";
   };
 
-  i18n.inputMethod = {
-    enabled = "fcitx";
-    fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
-  };
-
   services = {
     xserver = {
       enable = true;

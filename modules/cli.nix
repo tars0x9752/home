@@ -27,6 +27,7 @@
     polkit_gnome
     unzip
     figlet
+    protobuf
 
     # util replacement
     bat

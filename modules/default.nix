@@ -31,5 +31,8 @@
 
     # font
     ./font.nix
+
+    # Keyboard Input Method / 日本語入力
+    ./i18n
   ];
 }
