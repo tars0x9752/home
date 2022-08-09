@@ -5,6 +5,8 @@
 { config, pkgs, ... }:
 
 {
+  nix.settings.auto-optimise-store = true;
+
   imports =
     [
       # Include the results of the hardware scan.

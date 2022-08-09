@@ -81,7 +81,7 @@
             commands = [
               # --- Fun ---
               {
-                name = "hello-world";
+                name = "hello";
                 category = "Fun";
                 help = "Print a nice hello world";
                 command = ''
@@ -166,7 +166,7 @@
                 category = "Utility";
                 help = "Garbage collection";
                 command = ''
-                  nix-collect-garbage
+                  sudo nix-collect-garbage
                 '';
               }
               {
@@ -174,7 +174,7 @@
                 category = "Utility";
                 help = ''Delete old generations and garbage collection'';
                 command = ''
-                  nix-collect-garbage -d
+                  sudo nix-collect-garbage -d
                 '';
               }
             ];

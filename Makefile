@@ -1,44 +1,43 @@
 .PHONY: hello
 hello:
-	nix run '.#figlet' -- -f isometric1 -c "Hello World"
+	nix develop -c hello
 
 .PHONY: ls-pkg
 ls-pkg:
-	home-manager packages
+	nix develop -c ls-pkg
 
 .PHONY: ls-gen
 ls-gen:
-	home-manager generations
+	nix develop -c ls-gen
 
 .PHONY: fmt
 fmt:
-	nix fmt
+	nix develop -c fmt
 
 .PHONY: install
-install: export HOME_MANAGER_BACKUP_EXT = old
 install:
-	nix run '.#activate/tars'
+	nix develop -c install
 
 .PHONY: switch
 switch:
-	home-manager switch --flake '.#tars' -b bck --impure
+	nix develop -c switch
 
 .PHONY: update
 update:
-	home-manager switch --flake '.#tars' -b bck --impure --recreate-lock-file
+	nix develop -c update
 
 .PHONY: update-lock-only
 update-lock-only:
-	nix flake update
+	nix develop -c update-lock-only
 
 .PHONY: os-switch
 os-switch:
-	sudo nixos-rebuild switch --flake '.#tars' --impure
+	nix develop -c os-switch
 
 .PHONY: gc
 gc:
-	nix-collect-garbage
+	nix develop -c gc
 
 .PHONY: gc-all-gen
 gc-all-gen:
-	nix-collect-garbage -d
+	nix develop -c gc-all-gen
