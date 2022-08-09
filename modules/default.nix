@@ -14,6 +14,7 @@
     ./neofetch.nix
     ./cava.nix
     ./cxxmatrix.nix
+    ./rofi-power-menu.nix
 
     # shell
     ./bash

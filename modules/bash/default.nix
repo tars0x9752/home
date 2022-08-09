@@ -94,7 +94,7 @@
       }
 
       cya() {
-        shutdown -h now
+        systemctl poweroff
       }
     '';
   };
