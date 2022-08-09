@@ -225,6 +225,21 @@ in
       git restore --source "$@"
     }
 
+    # ------ RESET ------
+
+    g:reset@1() {
+      git reset --mixed HEAD~1
+    }
+
+    g:reset.soft@1() {
+      git reset --soft HEAD~1
+      g:status.mini
+    }
+
+    g:reset.hard@1() {
+      git reset --hard HEAD~1
+    }
+
     # ------ switch ------
 
     g:switch() {
