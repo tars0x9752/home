@@ -8,11 +8,24 @@
       enable = true;
 
       pluginConfig = ''
-        nmap <silent> <space>h :<C-u>call CocAction('doHover')<cr>
-        nmap <silent> <space><space> <Plug>(coc-definition)
-        nmap <silent> <space>rf <Plug>(coc-references)
-        nmap <silent> <space>rn <Plug>(coc-rename)
+        nmap <silent> <space><space> :<C-u>call CocAction('doHover')<cr>
+        " go back from definition is C-O
+        nmap <silent> <space>d <Plug>(coc-definition)
+        nmap <silent> <space>r <Plug>(coc-references)
+        nmap <silent> <space>n <Plug>(coc-rename)
         nmap <silent> <space>f <Plug>(coc-format)
+
+        function! CheckBackspace() abort
+          let col = col('.') - 1
+          return !col || getline('.')[col - 1]  =~# '\s'
+        endfunction
+
+        " Use <Tab> and <S-Tab> to navigate the completion list
+        inoremap <silent><expr> <TAB>
+              \ pumvisible() ? "\<C-n>" :
+              \ CheckBackspace() ? "\<TAB>" :
+              \ coc#refresh()
+        inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
         let g:coc_user_config = {
           \"suggest.completionItemKindLabels": {
@@ -43,6 +56,19 @@
           \}
         \}
       '';
+
+      # $XDG_CONFIG_HOME/nvim/coc-settings.json
+      settings = {
+        "languageserver" = {
+          # https://gitlab.com/jD91mZM2/nix-lsp
+          "nix" = {
+            "command" = "rnix-lsp";
+            "filetypes" = [
+              "nix"
+            ];
+          };
+        };
+      };
     };
 
     plugins = with pkgs.vimPlugins; [
@@ -63,7 +89,6 @@
       coc-eslint
       coc-pairs # or auto-pairs
       coc-prettier
-      coc-lists
     ];
 
     extraConfig = ''
@@ -150,6 +175,8 @@
       nnoremap <leader>fg <cmd>Telescope live_grep<cr>
       nnoremap <leader>fb <cmd>Telescope buffers<cr>
       nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+      nnoremap <space>t :NERDTreeToggle<cr>
     '';
   };
 }
