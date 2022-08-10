@@ -19,16 +19,16 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 ### NixOS
 
 - git clone and cd into this repository
-- `make os-switch`
-  - or manually do `sudo nixos-rebuild switch -I nixos-config=./nixos/configuration.nix`
-- `make install` to install home-manager itself and apply the home configuration
+- `make os-switch` or `nix develop -c os-switch`
+- `make install` or `nix develop -c install` to install home-manager itself and apply the home configuration
 - `reboot`
 
 ### Non-NixOS (x86_64-linux)
 
 - [install nix](https://nixos.org/download.html#nix-install-linux)
+  - `sh <(curl -L https://nixos.org/nix/install) --daemon`
 - git clone and cd into this repository
-- `make install` to install home-manager itself and apply the home configuration
+- `make install` or`nix develop -c install` to install home-manager itself and apply the home configuration
 - `reboot`
 
 ## Utility commands
@@ -50,6 +50,9 @@ It depends on what has changed but may need to restart i3wm or reboot the entire
 ```sh
 # (NixOS only) to apply `configuration.nix` changes
 make os-switch
+
+# or
+nix develop -c os-switch
 ```
 
 ### Update
@@ -57,24 +60,36 @@ make os-switch
 ```sh
 # may take a few minutes
 make update
+
+# or
+nix develop -c update
 ```
 
 ### Update the flake lock file only
 
 ```sh
 make update-lock-only
+
+# or
+nix develop -c update-lock-only
 ```
 
 ### Garbage collection
 
-```
+```sh
 make gc
+
+# or
+nix develop -c gc
 ```
 
 ### Delete old generations and garbage collection
 
-```
+```sh
 make gc-all-gen
+
+# or
+nix develop -c gc-all-gen
 ```
 
 This frees up more disk space than `gc`, but it'll deletes all old generations. Don't use this if you don't understand what generation means.

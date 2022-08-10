@@ -1,5 +1,17 @@
 {
   "nodes": {
+    "blesh": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-XFoT4rC83sEdj7pIQL+Bzn49lbGor/y+Y/IC4gXYEiE=",
+        "type": "tarball",
+        "url": "https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz"
+      }
+    },
     "devshell": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -104,6 +116,7 @@
     },
     "root": {
       "inputs": {
+        "blesh": "blesh",
         "devshell": "devshell",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
