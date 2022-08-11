@@ -76,7 +76,8 @@
     # So eachDefaultSystem doesn't mean much, but it's harmless as it is & I want to remember flake-utils is a thing, so I'll leave it here.
     flake-utils.lib.eachDefaultSystem
       (system: {
-        # Trying devShell as a better alternative to Makefile.
+        # Trying devShells and devshell as a better alternative to Makefile.
+        # https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-develop.html
         # https://github.com/numtide/devshell
         devShell =
           let

@@ -35,6 +35,8 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 
 > NOTE: At first I used Makefile for these commands, but now I've added the devShell commands as well. So you can also use `nix develop` and the devShell commands instead of make. Run `nix develop` then `menu` to see available devShell commands.
 
+> Or  maybe I should also consider using `apps` and `nix run` method. I'm still trying to figure out which is better / how it should be done.
+
 ### Switch
 
 ```sh
