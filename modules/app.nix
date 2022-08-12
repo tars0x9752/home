@@ -12,6 +12,22 @@
     vscode
   ];
 
+  # to add SKIP_HOST_UPDATE (discord is not "pure")
+  xdg.configFile."discord/settings.json".text = ''
+    {
+      "IS_MAXIMIZED": false,
+      "IS_MINIMIZED": false,
+      "WINDOW_BOUNDS": {
+        "x": 2024,
+        "y": 52,
+        "width": 1995,
+        "height": 1071
+      },
+      "BACKGROUND_COLOR": "#202225",
+      "SKIP_HOST_UPDATE": true
+    }
+  '';
+
   xdg.mimeApps = {
     enable = true;
 
