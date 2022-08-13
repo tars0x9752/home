@@ -49,9 +49,6 @@ source ~/.bash_completion.d/npm-completion
 
 BLESH_PATH="$(blesh-path)"
 
-# Nix版ではなくローカル版使いたい場合はこっちを使う
-# BLESH_PATH=~/.local/share/blesh/ble.sh
-
 source $BLESH_PATH
 
 # neofetch
