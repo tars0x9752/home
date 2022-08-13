@@ -154,7 +154,7 @@ in
     }
 
     g:push.origin-head() {
-      git push origin HEAD
+      git push --set-upstream origin HEAD
     }
 
     g:push.origin-head.force() {
