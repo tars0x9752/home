@@ -47,7 +47,7 @@ export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/
 
 source ~/.bash_completion.d/npm-completion
 
-BLESH_PATH=~/.nix-profile/share/blesh/ble.sh
+BLESH_PATH="$(blesh-path)"
 
 # Nix版ではなくローカル版使いたい場合はこっちを使う
 # BLESH_PATH=~/.local/share/blesh/ble.sh

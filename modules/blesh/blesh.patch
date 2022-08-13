@@ -1,0 +1,12 @@
+diff --git a/ble.sh b/ble.sh
+index a30dd25..d51e5d2 100644
+--- a/ble.sh
++++ b/ble.sh
+@@ -5674,7 +5674,6 @@ function ble/util/clock/.initialize {
+   if ((_ble_bash>=50000)) && {
+        local now=$EPOCHREALTIME
+        [[ $now == *.???* && $now != $EPOCHREALTIME ]]; }; then
+-    readonly EPOCHREALTIME
+     _ble_util_clock_base=$((10#0${now%.*}))
+     _ble_util_clock_reso=1
+     _ble_util_clock_type=EPOCHREALTIME
