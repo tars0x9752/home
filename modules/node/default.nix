@@ -1,10 +1,7 @@
 { config, pkgs, ... }:
 
-
 let
   inherit (config.home) homeDirectory;
-in
-let
   globalNodeModules = "${homeDirectory}/.node_modules_global";
 in
 {

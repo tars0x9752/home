@@ -10,11 +10,6 @@
     devshell.url = "github:numtide/devshell";
     flake-utils.url = "github:numtide/flake-utils";
 
-    # blesh は src からのビルド時に .git が必要になってしまうので tarball を使う.
-    # というかどっちにしても, flake で leaveDotGit する方法はないため(AFAIK), tarball を使う.
-    # TL;DR: 同じバージョンでも .git の中身は一意ではなく hash が変わってしまう可能性があり pure ではない!
-    # see: https://github.com/NixOS/nixpkgs/issues/8567#issuecomment-133409465
-    # and current state: https://github.com/NixOS/nixpkgs/issues/8567#issuecomment-1140237191
     blesh = {
       url = "https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz";
       flake = false;
@@ -61,15 +56,10 @@
           };
 
         # just for fun
-        "figlet" =
-          let
-            drv = pkgs.figlet;
-            exePath = "/bin/figlet";
-          in
-          {
-            type = "app";
-            program = "${drv}${exePath}";
-          };
+        "figlet" = {
+          type = "app";
+          program = "${pkgs.figlet}/bin/figlet";
+        };
       };
     } //
     # currently my home configs support only x86_64-linux.
