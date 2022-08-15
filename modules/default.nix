@@ -15,6 +15,7 @@
     ./cava.nix
     ./cxxmatrix.nix
     ./rofi-power-menu.nix
+    ./direnv.nix
 
     # shell
     ./bash

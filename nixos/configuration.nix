@@ -7,6 +7,12 @@
 {
   nix.settings.auto-optimise-store = true;
 
+  # see https://nixos.wiki/wiki/Storage_optimization#Pinning
+  nix.extraOptions = ''
+    keep-outputs = true
+    keep-derivations = true
+  '';
+
   imports =
     [
       # Include the results of the hardware scan.
