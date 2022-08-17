@@ -86,7 +86,7 @@
             commands = [
               # --- Fun ---
               {
-                name = "hello";
+                name = "dev:hello";
                 category = "Fun";
                 help = "Print a nice hello world";
                 command = ''
@@ -96,7 +96,7 @@
 
               # --- Initial Setup ---
               {
-                name = "install";
+                name = "dev:install";
                 category = "Initial Setup";
                 help = "Install home-manager itself and apply the home configuration";
                 command = ''
@@ -107,7 +107,7 @@
 
               # --- Home Environment ---
               {
-                name = "ls-pkg";
+                name = "dev:ls-pkg";
                 category = "Home";
                 help = "List all packages installed in home-manager-path";
                 command = ''
@@ -115,7 +115,7 @@
                 '';
               }
               {
-                name = "ls-gen";
+                name = "dev:ls-gen";
                 category = "Home";
                 help = "List all home environment generations";
                 command = ''
@@ -123,7 +123,7 @@
                 '';
               }
               {
-                name = "switch";
+                name = "dev:switch";
                 category = "Home";
                 help = "Switch home-manager to apply home config changes";
                 command = ''
@@ -131,7 +131,7 @@
                 '';
               }
               {
-                name = "update";
+                name = "dev:update";
                 category = "Home";
                 help = "Update things";
                 command = ''
@@ -139,16 +139,16 @@
                 '';
               }
               {
-                name = "update-nixpkgs";
+                name = "dev:update-nixpkgs";
                 category = "Home";
                 help = "Update nixpkgs only";
                 command = ''
                   nix flake lock --update-input nixpkgs
-                  switch
+                  dev:switch
                 '';
               }
               {
-                name = "update-lock-only";
+                name = "dev:update-lock-only";
                 category = "Home";
                 help = "Update the flake lock file only";
                 command = ''
@@ -158,7 +158,7 @@
 
               # --- NixOS ---
               {
-                name = "os-switch";
+                name = "dev:os-switch";
                 category = "NixOS";
                 help = "Switch nixos to rebuild and apply `configuration.nix` changes";
                 command = ''
@@ -168,7 +168,7 @@
 
               # --- Utility ---
               {
-                name = "fmt";
+                name = "dev:fmt";
                 category = "Utility";
                 help = "Format nix files";
                 command = ''
@@ -176,7 +176,7 @@
                 '';
               }
               {
-                name = "gc";
+                name = "dev:gc";
                 category = "Utility";
                 help = "Garbage collection";
                 command = ''
@@ -184,7 +184,7 @@
                 '';
               }
               {
-                name = "gc-all-gen";
+                name = "dev:gc-all-gen";
                 category = "Utility";
                 help = ''Delete old generations and garbage collection'';
                 command = ''

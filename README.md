@@ -42,6 +42,9 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 ```sh
 # to apply changes
 make switch
+
+# or
+nix develop -c dev:switch
 ```
 
 It depends on what has changed but may need to restart i3wm or reboot the entire system.
@@ -54,7 +57,7 @@ It depends on what has changed but may need to restart i3wm or reboot the entire
 make os-switch
 
 # or
-nix develop -c os-switch
+nix develop -c dev:os-switch
 ```
 
 ### Update
@@ -64,7 +67,7 @@ nix develop -c os-switch
 make update
 
 # or
-nix develop -c update
+nix develop -c dev:update
 ```
 
 ### Update the flake lock file only
@@ -73,7 +76,7 @@ nix develop -c update
 make update-lock-only
 
 # or
-nix develop -c update-lock-only
+nix develop -c dev:update-lock-only
 ```
 
 ### Garbage collection
@@ -82,7 +85,7 @@ nix develop -c update-lock-only
 make gc
 
 # or
-nix develop -c gc
+nix develop -c dev:gc
 ```
 
 ### Delete old generations and garbage collection
@@ -91,7 +94,7 @@ nix develop -c gc
 make gc-all-gen
 
 # or
-nix develop -c gc-all-gen
+nix develop -c dev:gc-all-gen
 ```
 
 This frees up more disk space than `gc`, but it'll deletes all old generations. Don't use this if you don't understand what generation means.
