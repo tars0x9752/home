@@ -19,8 +19,8 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 ### NixOS
 
 - git clone and cd into this repository
-- `make os-switch` or `nix develop -c os-switch`
-- `make install` or `nix develop -c install` to install home-manager itself and apply the home configuration
+- `nix develop -c os-switch`
+- `nix develop -c install` to install home-manager itself and apply the home configuration
 - `reboot`
 
 ### Non-NixOS (x86_64-linux)
@@ -28,23 +28,32 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 - [install nix](https://nixos.org/download.html#nix-install-linux)
   - `sh <(curl -L https://nixos.org/nix/install) --daemon`
 - git clone and cd into this repository
-- `make install` or`nix develop -c install` to install home-manager itself and apply the home configuration
+- `nix develop -c install` to install home-manager itself and apply the home configuration
 - `reboot`
 
 ## Utility commands
 
 > NOTE: At first I used Makefile for these commands, but now I've added the devShell commands as well. So you can also use `nix develop` and the devShell commands instead of make. Run `nix develop` then `menu` to see available devShell commands. 
 
-> I added nix-direnv integration so no need to `nix develop` manually every time. (You may need to run `direnv allow` the very first time)
+
+**EDIT:** Now, I've completely switched to devShell commands instead of make.
+
+The following commands are assumed to be used in `nix develop` shell. Auto-completion should work to help you type commands.
+
+Run `nix develop` first or use direnv instead. There's `nix-direnv` integration in this configs so no need to `nix develop` manually every time. (If `direnv` is already enabled, it will automatically run `nix develop` when you cd to this directory.  You need to run `direnv allow` if it's not enabled yet.)
+
+### Show menu
+
+Show all available devShell commands.
+
+```sh
+menu
+```
 
 ### Switch
 
 ```sh
-# to apply changes
-make switch
-
-# or
-nix develop -c dev:switch
+dev:switch
 ```
 
 It depends on what has changed but may need to restart i3wm or reboot the entire system.
@@ -53,52 +62,36 @@ It depends on what has changed but may need to restart i3wm or reboot the entire
 ### (NixOS Only) OS Rebuild Switch
 
 ```sh
-# (NixOS only) to apply `configuration.nix` changes
-make os-switch
-
-# or
-nix develop -c dev:os-switch
+dev:os-switch
 ```
 
-### Update
+### Update all home-manager inputs
 
 ```sh
-# may take a few minutes
-make update
-
-# or
-nix develop -c dev:update
+dev:update
 ```
 
-### Update the flake lock file only
+### Update nixpkgs only
 
 ```sh
-make update-lock-only
-
-# or
-nix develop -c dev:update-lock-only
+dev:update-nixpkgs
 ```
 
 ### Garbage collection
 
 ```sh
-make gc
+# normal garbage collection
+dev:gc
 
-# or
-nix develop -c dev:gc
+# delete all generations older than 5 days
+dev:gc-stale
+
+# delete all old generations
+dev:gc-all
 ```
 
-### Delete old generations and garbage collection
-
-```sh
-make gc-all-gen
-
-# or
-nix develop -c dev:gc-all-gen
-```
-
-This frees up more disk space than `gc`, but it'll deletes all old generations. Don't use this if you don't understand what generation means.
+`dev:gc-all` frees up more disk space than `dev:gc`, but it'll deletes all old generations of all profiles. Don't use this if you don't understand what it means since this makes rollbacks to previous configurations impossible.
 
 ### Others
 
-read `Makefile`
+read `flake.nix`

@@ -102,6 +102,7 @@
                 command = ''
                   export HOME_MANAGER_BACKUP_EXT=old
                   nix run '.#activate/tars'
+                  direnv allow
                 '';
               }
 
@@ -184,9 +185,17 @@
                 '';
               }
               {
-                name = "dev:gc-all-gen";
+                name = "dev:gc-stale";
                 category = "Utility";
-                help = ''Delete old generations and garbage collection'';
+                help = ''Perform garbage collection and delete all generations older than 5 days'';
+                command = ''
+                  sudo nix-collect-garbage -d --delete-older-than 5d
+                '';
+              }
+              {
+                name = "dev:gc-all";
+                category = "Utility";
+                help = ''Perform garbage collection and delete all old generations'';
                 command = ''
                   sudo nix-collect-garbage -d
                 '';
