@@ -139,6 +139,15 @@
                 '';
               }
               {
+                name = "update-nixpkgs";
+                category = "Home";
+                help = "Update nixpkgs only";
+                command = ''
+                  nix flake lock --update-input nixpkgs
+                  switch
+                '';
+              }
+              {
                 name = "update-lock-only";
                 category = "Home";
                 help = "Update the flake lock file only";
