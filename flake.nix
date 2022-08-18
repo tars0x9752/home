@@ -69,7 +69,7 @@
         # Trying devShells and devshell as a better alternative to Makefile.
         # https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-develop.html
         # https://github.com/numtide/devshell
-        devShell =
+        devShells.default =
           let
             pkgs = import nixpkgs {
               inherit system;
