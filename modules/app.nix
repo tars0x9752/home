@@ -10,6 +10,7 @@
     gimp
     lxappearance
     vscode
+    screenkey
   ];
 
   # to add SKIP_HOST_UPDATE (discord is not "pure")
