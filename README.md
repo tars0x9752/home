@@ -18,7 +18,8 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 
 ### NixOS
 
-- git clone and cd into this repository
+- `nix flake clone github:tars0x9752/home --dest <DIR_NAME>` to clone this repo. then `cd <DIR_NAME>`
+  - Since this repository is a flake, you don't even need `git` to clone. Though if you prefer git command, you can do `git clone` instead.
 - `nix develop -c os-switch`
 - `nix develop -c install` to install home-manager itself and apply the home configuration
 - `reboot`
@@ -27,7 +28,8 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 
 - [install nix](https://nixos.org/download.html#nix-install-linux)
   - `sh <(curl -L https://nixos.org/nix/install) --daemon`
-- git clone and cd into this repository
+- `nix flake clone github:tars0x9752/home --dest <DIR_NAME>` to clone this repo. then `cd <DIR_NAME>`
+  - Since this repository is a flake, you don't even need `git` to clone. Though if you prefer git command, you can do `git clone` instead.
 - `nix develop -c install` to install home-manager itself and apply the home configuration
 - `reboot`
 
@@ -90,7 +92,7 @@ dev:gc-stale
 dev:gc-all
 ```
 
-`dev:gc-all` frees up more disk space than `dev:gc`, but it'll deletes all old generations of all profiles. Don't use this if you don't understand what it means since this makes rollbacks to previous configurations impossible.
+`dev:gc-all` frees up more disk space than `dev:gc`, but it'll delete all old generations of all profiles. Don't use this if you don't understand what it means since this makes rollbacks to previous configurations impossible.
 
 ### Others
 

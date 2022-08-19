@@ -33,6 +33,24 @@
         xsel -bi
       }
 
+      template:ls() {
+        nix flake show 'github:tars0x9752/templates'
+      }
+
+      template:metadata() {
+        nix flake metadata 'github:tars0x9752/templates'
+      }
+
+      template:use() {
+        if [[ -z "$1" ]]; then
+          echo "a template name required."
+        elif [[ -z "$2" ]]; then
+          echo "a dir name required."
+        else
+          nix flake new "$2" -t "github:tars0x9752/templates#$1"          
+        fi
+      }
+
       wifi:on() {
         nmcli radio wifi on
       }
