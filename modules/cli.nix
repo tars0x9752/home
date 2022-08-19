@@ -44,6 +44,7 @@
     zbar
     imagemagick
     qrencode
+    ffmpeg_5
 
     # fm
     ranger
