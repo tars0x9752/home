@@ -4,6 +4,7 @@
   imports = [
     # app
     ./app.nix
+    ./obs.nix
 
     # cli
     ./cli.nix
