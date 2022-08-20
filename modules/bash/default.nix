@@ -75,6 +75,14 @@
         tty-clock -c -C 4
       }
 
+      show:screenkey.start() {
+        screenkey &
+      }
+
+      show:screenkey.end() {
+        pkill screenkey
+      }
+
       # screenshot
       img:screenshot() {
         if [[ -z "$1" ]]; then
