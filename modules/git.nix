@@ -6,12 +6,10 @@ let
   DEFAULT_BRANCH_OLD = "master";
   DEVELOP_BRANCH = "develop";
   DEVELOP_BRANCH_ABBREV = "dev";
-in
-let
+
   PROTECTED_BRANCHE_LIST = [ DEFAULT_BRANCH DEFAULT_BRANCH_OLD DEVELOP_BRANCH DEVELOP_BRANCH_ABBREV ];
-in
-let
-  PROTECTED_BRANCHES = concatStringsSep "|" [ DEFAULT_BRANCH DEFAULT_BRANCH_OLD DEVELOP_BRANCH DEVELOP_BRANCH_ABBREV ];
+
+  PROTECTED_BRANCHES_STR = concatStringsSep "|" PROTECTED_BRANCHE_LIST;
 in
 {
   # gh auth login　時 readonly のエラー出るけど問題なし
@@ -326,12 +324,12 @@ in
     # 注: squash マージされたものは git branch --merged で表示されないのでこれでは消せないことに注意
     g:delete-merged-branch() {
       git fetch --prune
-      git branch -d $(git branch --merged | rg --invert-match "\*|${PROTECTED_BRANCHES}")
+      git branch -d $(git branch --merged | rg --invert-match "\*|${PROTECTED_BRANCHES_STR}")
     }
 
     # プロテクトされてないブランチを一括削除
     g:delete-non-protected-branch() {
-      git branch -D $(git branch | rg --invert-match "\*|${PROTECTED_BRANCHES}")
+      git branch -D $(git branch | rg --invert-match "\*|${PROTECTED_BRANCHES_STR}")
     }
 
     ${concatStringsSep "\n" (map (branchname: ''
@@ -351,10 +349,12 @@ in
     # ------ handy fns ------
 
     g() {
+      echo "run g:status.mini"
       g:status.mini
     }
 
     g@a() {
+      echo "run g:add.all"
       g:add.all
     }
 
@@ -363,10 +363,12 @@ in
     }
 
     g@p() {
+      echo "run g:push.origin-head"
       g:push.origin-head
     }
 
     g@f() {
+      echo "run g:fetch.prune"
       g:fetch.prune
     }
 
@@ -379,38 +381,47 @@ in
     '') PROTECTED_BRANCHE_LIST)}
 
     g@d() {
+      echo "run g:diff"
       g:diff
     }
 
     g@ds() {
+      echo "run g:diff.staged"
       g:diff.staged
     }
 
     g@s() {
+      echo "run g:switch $1"
       g:switch $1
     }
 
     g@sc() {
+      echo "run g:switch.create $1"
       g:switch.create $1
     }
 
     g@ra() {
+      echo "run g:restore.all"
       g:restore.all
     }
 
     g@un() {
+      echo "run g:restore.unstage.all"
       g:restore.unstage.all
     }
 
     g@l() {
+      echo "run g:log.pretty-oneline"
       g:log.pretty-oneline
     }
 
     g@z-del-merged() {
+      echo "run g:delete-merged-branch"
       g:delete-merged-branch
     }
 
     g@z-del-nonpro() {
+      echo "run g:delete-non-protected-branch"
       g:delete-non-protected-branch
     }
   '';
