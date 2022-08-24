@@ -42,7 +42,7 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 
 The following commands are assumed to be used in `nix develop` shell. Auto-completion should work to help you type commands.
 
-Run `nix develop` first or use direnv instead. There's `nix-direnv` integration in this configs so no need to `nix develop` manually every time. (If `direnv` is already enabled, it will automatically run `nix develop` when you cd to this directory.  You need to run `direnv allow` if it's not enabled yet.)
+Run `nix develop` first or use direnv instead. There's `nix-direnv` integration in this configs so no need to `nix develop` manually every time. (If `direnv` is already enabled, it will automatically reproduce `nix develop` environment when you cd to this directory.  You need to run `direnv allow` if it's not enabled yet.)
 
 ### Show menu
 
