@@ -173,6 +173,22 @@
               '';
             }
             {
+              name = "dev:du-svg";
+              category = "Utility";
+              help = "Show what gc-roots are taking space (svg)";
+              command = ''
+                nix-du -s=500MB | tred | dot -Tsvg > store.svg
+              '';
+            }
+            {
+              name = "dev:du-png";
+              category = "Utility";
+              help = "Show what gc-roots are taking space (png)";
+              command = ''
+                nix-du -s=500MB | tred | dot -Tpng > store.png
+              '';
+            }
+            {
               name = "dev:gc";
               category = "Utility";
               help = "Garbage collection";

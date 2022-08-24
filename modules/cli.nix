@@ -7,6 +7,7 @@
     nixpkgs-fmt
     nix-prefetch-git
     nix-prefetch-github
+    nix-du
 
     # util
     coreutils
@@ -44,7 +45,8 @@
     zbar
     imagemagick
     qrencode
-    ffmpeg_5
+    ffmpeg_5-full
+    graphviz
 
     # fm
     ranger
