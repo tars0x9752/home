@@ -31,6 +31,7 @@
     # dev
     ./node
     ./rust.nix
+    ./haskell.nix
 
     # font
     ./font.nix
