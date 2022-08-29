@@ -4,10 +4,11 @@ let
   colors = rec {
     # general
     background = "#252a34";
+    background-transparent = "#cc252a34"; # for polybar
     background-alt = "#3b4354";
     foreground = "#F1FAEE";
-    # primary = "#08D9D6";
     primary = "#08D9D6";
+    primary-transparent = "#cc08D9D6"; # for polybar
     secondary = "#047672";
     alert = "#ff2e63";
     disabled = "#707880";
@@ -272,7 +273,7 @@ in
           width = "100%";
           height = 40;
 
-          background = "${colors.background}";
+          background = "${colors.background-transparent}";
           foreground = "${colors.foreground}";
 
           # underline / overline
@@ -306,7 +307,7 @@ in
           type = "custom/text";
           content = " NixOS";
           content-foreground = "${colors.background}";
-          content-background = "${colors.primary}";
+          content-background = "${colors.primary-transparent}";
           content-padding = 2;
         };
 
@@ -419,7 +420,7 @@ in
           format = "<label>";
           format-prefix = " ";
           format-foreground = "${colors.background}";
-          format-background = "${colors.primary}";
+          format-background = "${colors.primary-transparent}";
           format-padding = 2;
         };
 
