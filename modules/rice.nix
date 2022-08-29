@@ -6,6 +6,7 @@ let
     background = "#252a34";
     background-alt = "#3b4354";
     foreground = "#F1FAEE";
+    # primary = "#08D9D6";
     primary = "#08D9D6";
     secondary = "#047672";
     alert = "#ff2e63";
@@ -19,10 +20,12 @@ let
     fg1 = "${colors.foreground}";
     fg2 = "${colors.disabled}80";
   };
+
+  wallpaperOut = "wallpaper/wallpaper.jpg";
 in
 {
   # wallpaper
-  xdg.configFile."wallpaper/wallpaper.jpg".source = ../wallpaper/cube.jpg;
+  xdg.configFile."${wallpaperOut}".source = ../wallpaper/r.jpg;
 
   xsession = {
     enable = true;
@@ -65,7 +68,7 @@ in
             notification = false;
           }
           {
-            command = "${pkgs.feh}/bin/feh --bg-scale ${config.xdg.configHome}/wallpaper/wallpaper.jpg";
+            command = "${pkgs.feh}/bin/feh --bg-scale ${config.xdg.configHome}/${wallpaperOut}";
             always = true;
             notification = false;
           }
@@ -126,9 +129,12 @@ in
     };
   };
 
-  # picom
+  # picom (necessary for transparent window)
   services.picom = {
-    enable = true;
+    enable = true; # 
+
+    fade = true;
+    fadeDelta = 2;
   };
 
   # rofi
