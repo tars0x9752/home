@@ -25,6 +25,6 @@ disabled = false
 
 [time]
 disabled = false
-format = '[  $time ](fg:blue bold)'
+format = '[  $time ](fg:cyan)'
 time_format = "%F %R"
 utc_time_offset = "9"
