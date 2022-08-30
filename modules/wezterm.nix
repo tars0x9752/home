@@ -10,7 +10,7 @@
     
     return {
       font_size = 16,
-      color_scheme = 'Chalk', -- 候補: Chester, Chalk, Ayu Mirage など
+      color_scheme = 'Framer (base16)',
       window_background_opacity = 0.85,
       hide_tab_bar_if_only_one_tab = true,
     }
