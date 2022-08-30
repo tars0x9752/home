@@ -3,12 +3,12 @@
 let
   colors = rec {
     # general
-    background = "#252a34";
-    background-transparent = "#cc252a34"; # for polybar
+    background = "#312f2f";
     background-alt = "#3b4354";
+
     foreground = "#F1FAEE";
+
     primary = "#08D9D6";
-    primary-transparent = "#cc08D9D6"; # for polybar
     secondary = "#047672";
     alert = "#ff2e63";
     disabled = "#707880";
@@ -22,11 +22,11 @@ let
     fg2 = "${colors.disabled}80";
   };
 
-  wallpaperOut = "wallpaper/wallpaper.jpg";
+  wallpaperOut = "wallpaper/wallpaper.png";
 in
 {
   # wallpaper
-  xdg.configFile."${wallpaperOut}".source = ../wallpaper/r.jpg;
+  xdg.configFile."${wallpaperOut}".source = ../wallpaper/hello.png;
 
   xsession = {
     enable = true;
@@ -132,10 +132,7 @@ in
 
   # picom (necessary for transparent window)
   services.picom = {
-    enable = true; # 
-
-    fade = true;
-    fadeDelta = 2;
+    enable = true;
   };
 
   # rofi
@@ -271,10 +268,10 @@ in
           monitor = "HDMI-0";
 
           width = "100%";
-          height = 40;
+          height = 38;
 
-          background = "${colors.background-transparent}";
           foreground = "${colors.foreground}";
+          background = "${colors.background}";
 
           # underline / overline
           line-size = 2;
@@ -286,7 +283,7 @@ in
 
           module-margin = 1;
 
-          font-0 = "JetBrainsMono Nerd Font:style=Regular:size=14;4";
+          font-0 = "JetBrainsMono Nerd Font:style=Regular:size=13;4";
 
           modules-left = "oslogo xworkspaces xwindow";
           modules-right = "filesystem memory cpu pulseaudio-control-output wlan battery date";
@@ -306,8 +303,8 @@ in
         "module/oslogo" = {
           type = "custom/text";
           content = " NixOS";
-          content-foreground = "${colors.background}";
-          content-background = "${colors.primary-transparent}";
+          content-foreground = "${colors.foreground}";
+          content-background = "${colors.background-alt}";
           content-padding = 2;
         };
 
@@ -419,8 +416,8 @@ in
           label = "%date%";
           format = "<label>";
           format-prefix = " ";
-          format-foreground = "${colors.background}";
-          format-background = "${colors.primary-transparent}";
+          format-foreground = "${colors.foreground}";
+          format-background = "${colors.background-alt}";
           format-padding = 2;
         };
 
