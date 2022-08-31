@@ -10,7 +10,7 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 
 ## Screenshots
 
-<a href="./screenshots/home.png"><img src="./screenshots/home.png" height="700" ></a>
+<a href="./screenshots/screens.png"><img src="./screenshots/screens.png" ></a>
 
 ## Initial set up
 
@@ -35,14 +35,13 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 
 ## Utility commands
 
-> NOTE: At first I used Makefile for these commands, but now I've added the devShell commands as well. So you can also use `nix develop` and the devShell commands instead of make. Run `nix develop` then `menu` to see available devShell commands. 
-
+> NOTE: At first I used Makefile for these commands, but now I've added the devShell commands as well. So you can also use `nix develop` and the devShell commands instead of make. Run `nix develop` then `menu` to see available devShell commands.
 
 **EDIT:** Now, I've completely switched to devShell commands instead of make.
 
 The following commands are assumed to be used in `nix develop` shell. Auto-completion should work to help you type commands.
 
-Run `nix develop` first or use direnv instead. There's `nix-direnv` integration in this configs so no need to `nix develop` manually every time. (If `direnv` is already enabled, it will automatically reproduce `nix develop` environment when you cd to this directory.  You need to run `direnv allow` if it's not enabled yet.)
+Run `nix develop` first or use direnv instead. There's `nix-direnv` integration in this configs so no need to `nix develop` manually every time. (If `direnv` is already enabled, it will automatically reproduce `nix develop` environment when you cd to this directory. You need to run `direnv allow` if it's not enabled yet.)
 
 ### Show menu
 
