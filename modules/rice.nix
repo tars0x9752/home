@@ -83,8 +83,7 @@ in
         keybindings =
           let
             main-display-g = "1920x1080+1920+0";
-          in
-          let
+
             modifier = config.xsession.windowManager.i3.config.modifier;
           in
           lib.mkOptionDefault {
