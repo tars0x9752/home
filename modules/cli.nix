@@ -62,7 +62,7 @@
     enable = true;
 
     config = {
-      theme = "Sublime Snazzy";
+      theme = "base16";
     };
   };
 }

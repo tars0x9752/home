@@ -46,7 +46,7 @@ in
       enable = true;
       options = {
         features = "side-by-side line-numbers";
-        syntax-theme = "Monokai Extended Origin";
+        syntax-theme = "base16";
         delta.navigate = true;
       };
     };
