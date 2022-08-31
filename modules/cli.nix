@@ -31,7 +31,6 @@
     protobuf
 
     # util replacement
-    bat
     broot
     lsd
     ripgrep
@@ -57,5 +56,13 @@
 
   programs.fzf = {
     enable = true;
+  };
+
+  programs.bat = {
+    enable = true;
+
+    config = {
+      theme = "Sublime Snazzy";
+    };
   };
 }
