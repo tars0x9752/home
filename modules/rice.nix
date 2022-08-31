@@ -169,7 +169,6 @@ in
           background-color = mkL "@bg0";
           location = mkL "center";
           width = 640;
-          y-offset = -200;
           border-radius = 8;
         };
 
