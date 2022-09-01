@@ -20,8 +20,8 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
 
 - `nix flake clone github:tars0x9752/home --dest <DIR_NAME>` to clone this repo. then `cd <DIR_NAME>`
   - Since this repository is a flake, you don't even need `git` to clone. Though if you prefer git command, you can do `git clone` instead.
-- `nix develop -c os-switch`
-- `nix develop -c install` to install home-manager itself and apply the home configuration
+- `nix develop -c dev:os-switch`
+- `nix develop -c dev:install` to install home-manager itself and apply the home configuration
 - `reboot`
 
 ### Non-NixOS (x86_64-linux)
@@ -30,7 +30,7 @@ Basically, I let home-manager manage most of the stuff except NixOS system-speci
   - `sh <(curl -L https://nixos.org/nix/install) --daemon`
 - `nix flake clone github:tars0x9752/home --dest <DIR_NAME>` to clone this repo. then `cd <DIR_NAME>`
   - Since this repository is a flake, you don't even need `git` to clone. Though if you prefer git command, you can do `git clone` instead.
-- `nix develop -c install` to install home-manager itself and apply the home configuration
+- `nix develop -c dev:install` to install home-manager itself and apply the home configuration
 - `reboot`
 
 ## Utility commands
