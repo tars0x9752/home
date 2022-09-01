@@ -11,6 +11,7 @@
     lxappearance
     vscode
     screenkey
+    vlc
   ];
 
   # to add SKIP_HOST_UPDATE (discord is not "pure")
