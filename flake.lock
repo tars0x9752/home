@@ -3,13 +3,13 @@
     "blesh": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-XFoT4rC83sEdj7pIQL+Bzn49lbGor/y+Y/IC4gXYEiE=",
+        "narHash": "sha256-eXMAp9PyfXumw+uECoU36G3+jvbrfr7WHKvyVisDA/8=",
         "type": "tarball",
-        "url": "https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz"
+        "url": "https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly-20220825+793dfad.tar.xz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz"
+        "url": "https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly-20220825+793dfad.tar.xz"
       }
     },
     "devshell": {
