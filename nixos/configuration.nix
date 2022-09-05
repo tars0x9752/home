@@ -85,8 +85,6 @@
     nvidiaBusId = "PCI:1:0:0";
   };
 
-  services.gnome.gnome-keyring.enable = true; # keeweb で必要
-
   # hardware.opengl.enable = true;
 
   sound.enable = true;
