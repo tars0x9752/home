@@ -6,7 +6,7 @@ My home nix configs/dotfiles with `home-manager`(standalone mode) and `configura
 
 Basically, I let home-manager manage most of the stuff except NixOS system-specific settings. NixOS system-specific settings are in `configuration.nix`. If it's not NixOS you can simply use only the home-manager part.
 
-> However, the home-manager part also uses user and environment specific settings (user names, device names and such), so it is necessary to make adjustments according to your environment.
+**Notice:** This flake/repository contains user environment specific settings. So it is necessary to make adjustments according to your environment, e.g. your machines, your language, your displays, your keyboards, your accounts. Don't use everything as it is unless you are me. It's better to start small by using only the parts you understand.
 
 ## Screenshots
 
