@@ -96,10 +96,13 @@
   # Configure console keymap
   console.keyMap = "jp106";
 
+  # docker
+  virtualisation.docker.enable = true;
+
   users.users.tars = {
     isNormalUser = true;
     description = "tars";
-    extraGroups = [ "networkmanager" "wheel" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" "docker" ];
     packages = with pkgs; [ ];
   };
 
