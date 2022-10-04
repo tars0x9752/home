@@ -51,6 +51,11 @@ in
       };
     };
   };
+  
+  # 暫定 (TODO: 不要になったら消す)
+  xdg.configFile."git/ignore".text = ''
+    .direnv
+  '';
 
   # tab 補完が効くように
   xdg.configFile."bash/git-functions.bash".text = ''
