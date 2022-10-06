@@ -5,6 +5,10 @@
     enable = true;
 
     initExtra = ''
+      # https://github.com/NixOS/nixpkgs/issues/148686
+      # https://github.com/NixOS/nixpkgs/issues/3382
+      export CURL_CA_BUNDLE=$SSL_CERT_FILE
+
       source ~/.config/bash/init.bash
 
       source ~/.config/bash/git-functions.bash
