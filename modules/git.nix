@@ -51,7 +51,7 @@ in
       };
     };
   };
-  
+
   # 暫定 (TODO: 不要になったら消す)
   xdg.configFile."git/ignore".text = ''
     .direnv
@@ -107,6 +107,10 @@ in
 
     g:diff() {
       git diff "$@"
+    }
+
+    g:diff.origin-head() {
+      git diff origin/HEAD..HEAD
     }
 
     g:diff.staged() {
@@ -170,11 +174,11 @@ in
       git push --force-with-lease
     }
 
-    g:push.origin-head() {
+    g:push.origin.head() {
       git push --set-upstream origin HEAD
     }
 
-    g:push.origin-head.force() {
+    g:push.origin.head.force() {
       git push origin HEAD --force-with-lease
     }
 
@@ -280,7 +284,7 @@ in
       git restore --source "$@"
     }
 
-    # ------ RESET ------
+    # ------ reset ------
 
     g:reset@1() {
       git reset --mixed HEAD~1
@@ -390,7 +394,7 @@ in
     }
 
     ${concatStringsSep "\n" (map (branchname: ''
-    # 現在のブランチに ${branchname} を rebase する
+    # 現在のブランチを ${branchname} に rebase する
     g:rebase-${branchname}() {
       local currentbranch=$(git branch --show-current)
       if [[ "$currentbranch" == "${branchname}" ]]; then
@@ -420,8 +424,8 @@ in
     }
 
     g@p() {
-      echo "run g:push.origin-head"
-      g:push.origin-head
+      echo "run g:push.origin.head"
+      g:push.origin.head
     }
 
     g@f() {
@@ -431,8 +435,11 @@ in
 
     ${concatStringsSep "\n" (map (branchname: ''
     g@${branchname}() {
+      echo "run: g:fetch.prune"
       g:fetch.prune
+      echo "run: g:switch ${branchname}"
       g:switch ${branchname}
+      echo "run: g:pull.${branchname}"
       g:pull.${branchname}
     }
     '') PROTECTED_BRANCHE_LIST)}
@@ -447,6 +454,21 @@ in
       g:diff.staged
     }
 
+    g@pf() {
+      echo "run g:push.origin.head.force"
+      g:push.origin.head.force
+    }
+
+    g@pr.auto-squash() {
+      echo "run g:rebase.i.origin-head.no-edit"
+      g:rebase.i.origin-head.no-edit
+    }
+
+    g@pr.diff() {
+      echo "run g:diff.origin-head"
+      g:diff.origin-head
+    }
+
     g@s() {
       echo "run g:switch $1"
       g:switch $1
@@ -457,10 +479,17 @@ in
       g:switch.create $1
     }
 
-    g@ra() {
+    g@r() {
       echo "run g:restore.all"
       g:restore.all
     }
+
+    ${concatStringsSep "\n" (map (branchname: ''
+    g@rb.${branchname}() {
+      echo "run g:rebase-${branchname}"
+      g:rebase-${branchname}
+    }
+    '') PROTECTED_BRANCHE_LIST)}
 
     g@un() {
       echo "run g:restore.unstage.all"
