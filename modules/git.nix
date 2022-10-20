@@ -146,6 +146,20 @@ in
       git commit --amend --no-edit
     }
 
+    g:commit.fixup() {
+      git commit --fixup "$1"
+    }
+
+    # fixup + commit message 変更(3行目以下に新たなメッセージを入力)
+    g:commit.fixup.amend() {
+      git commit --fixup=amend:"$1"
+    }
+
+    # message 編集のみ(3行目以下に新たなメッセージを入力)
+    g:commit.fixup.reword() {
+      git commit --fixup=reword:"$1"
+    }
+
     # ------ push ------
 
     g:push() {
