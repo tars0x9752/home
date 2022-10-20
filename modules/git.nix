@@ -232,6 +232,26 @@ in
       git -c sequence.editor=true rebase --interactive --fork-point origin/HEAD --autosquash
     }
 
+    # ------ remote ------
+
+    g:remote.list() {
+      git remote --verbose
+    }
+
+    g:remote.set-head.origin.auto() {
+      git remote set-head origin --auto
+    }
+
+    ${concatStringsSep "\n" (map (branchname: ''
+    g:remote.set-head.origin.${branchname}() {
+      git remote set-head origin ${branchname}
+    }
+    '') PROTECTED_BRANCHE_LIST)}
+
+    g:remote.show.origin() {
+      git remote show origin
+    }
+
     # ------ restore ------
 
     g:restore() {
