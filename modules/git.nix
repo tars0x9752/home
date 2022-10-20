@@ -214,6 +214,24 @@ in
       git config --list --show-origin
     }
 
+    # ------ rebase ------
+
+    g:rebase.continue() {
+      git rebase --continue 
+    }
+
+    g:rebase.i() {
+      git rebase --interactive "$@" --autosquash
+    }
+
+    g:rebase.i.origin-head() {
+      git rebase --interactive --fork-point origin/HEAD --autosquash
+    }
+
+    g:rebase.i.origin-head.no-edit() {
+      git -c sequence.editor=true rebase --interactive --fork-point origin/HEAD --autosquash
+    }
+
     # ------ restore ------
 
     g:restore() {
