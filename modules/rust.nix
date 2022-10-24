@@ -2,7 +2,10 @@
 
 {
   home = {
-    packages = with pkgs; [ cargo rustc gcc ];
+    packages = with pkgs; [
+      rustup
+      gcc
+    ];
     sessionPath = [ "$HOME/.cargo/bin" ];
   };
 }
