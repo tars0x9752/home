@@ -189,6 +189,14 @@
               '';
             }
             {
+              name = "dev:show-gc-roots";
+              category = "Utility";
+              help = "Show gc-roots";
+              command = ''
+                nix-store --gc --print-roots
+              '';
+            }
+            {
               name = "dev:gc";
               category = "Utility";
               help = "Garbage collection";
