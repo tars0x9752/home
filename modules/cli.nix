@@ -37,6 +37,9 @@
     fd
     dua
 
+    # ditrobox
+    distrobox
+
     # media
     feh
     tty-clock
