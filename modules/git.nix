@@ -16,7 +16,7 @@ in
   # https://github.com/cli/cli/issues/4955
   programs.gh = {
     enable = true;
-    enableGitCredentialHelper = true;
+    gitCredentialHelper.enable = true;
   };
 
   programs.git = {

@@ -246,7 +246,7 @@ in
     enable = true;
 
     package = pkgs.polybar.override {
-      i3GapsSupport = true;
+      # i3GapsSupport = true; https://github.com/NixOS/nixpkgs/pull/208861
       alsaSupport = true;
       pulseSupport = true;
       iwSupport = true;
