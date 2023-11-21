@@ -310,17 +310,17 @@ in
           type = "internal/xworkspaces";
           pin-workspaces = true;
           enable-scroll = false;
-          icon-0 = "10;";
-          icon-1 = "1;";
-          icon-2 = "2;";
-          icon-3 = "3;";
-          icon-4 = "4;";
-          icon-5 = "5;";
-          icon-6 = "6;";
-          icon-7 = "7;";
-          icon-8 = "8;";
-          icon-9 = "9;";
-          icon-default = "";
+          icon-0 = "10;󰽽";
+          icon-1 = "1;󰎤";
+          icon-2 = "2;󰎧";
+          icon-3 = "3;󰎪";
+          icon-4 = "4;󰎭";
+          icon-5 = "5;󰎱";
+          icon-6 = "6;󰎳";
+          icon-7 = "7;󰎶";
+          icon-8 = "8;󰎹";
+          icon-9 = "9;󰎼";
+          icon-default = "󰎤";
 
           format = "<label-state>";
 
@@ -400,9 +400,9 @@ in
           format-disconnected = "<label-disconnected>";
           label-connected = "on";
           label-disconnected = "off";
-          format-connected-prefix = "直 ";
+          format-connected-prefix = "󰖩 ";
           format-connected-prefix-foreground = "${colors.primary}";
-          format-disconnected-prefix = "睊 ";
+          format-disconnected-prefix = "󰖪 ";
           format-disconnected-foreground = "${colors.disabled}";
           format-disconnected-prefix-foreground = "${colors.disabled}";
         };
@@ -431,9 +431,9 @@ in
           format-charging = "<label-charging>";
           format-discharging = "<label-discharging>";
           format-full = "<label-full>";
-          format-charging-prefix = " ";
-          format-discharging-prefix = " ";
-          format-full-prefix = " ";
+          format-charging-prefix = "󱊦 ";
+          format-discharging-prefix = "󱊢 ";
+          format-full-prefix = "󱊣 ";
           format-charging-prefix-foreground = "${colors.primary}";
           format-discharging-prefix-foreground = "${colors.primary}";
           format-full-prefix-foreground = "${colors.primary}";
