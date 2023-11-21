@@ -73,7 +73,11 @@
       layout = "jp";
       xkbVariant = "OADG109A";
       videoDrivers = [ "nvidia" ];
+
+      exportConfiguration = true;
     };
+
+    logind.lidSwitch = "ignore";
   };
 
   hardware.nvidia.prime = {
@@ -98,6 +102,8 @@
 
   # docker
   virtualisation.docker.enable = true;
+
+  nix.settings.trusted-users = [ "root" "tars" ];
 
   users.users.tars = {
     isNormalUser = true;
