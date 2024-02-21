@@ -14,7 +14,8 @@
   xdg.configFile."mozc/config1.db".source = ./mozc/config1.db;
 
   # NOTE: もし初めて switch する前にすでに ~/.mozc が存在する場合、xdg config home のほうではなく ~/.mozc が使われるためその場合は下記を使うこと
-  # home.file.".mozc/config1.db".source = ./mozc/config1.db;
+  # NOTE 追記: やっぱこっちにも置いといたほうがよさげ
+  home.file.".mozc/config1.db".source = ./mozc/config1.db;
 
   # fcitx5 の設定ファイル
   # 上記の mozc で設定した IME on/off がちゃんと期待通り動くようにしてある & 余計な設定やキーバインドを外してある
