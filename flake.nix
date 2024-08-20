@@ -2,9 +2,10 @@
   description = "Home Manager Configuration Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05"; # for HOME
+    nixpkgsForOS.url = "github:nixos/nixpkgs/nixos-22.11"; # for OS
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     devshell.url = "github:numtide/devshell";
@@ -16,7 +17,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, devshell, blesh, ... }:
+  outputs = { self, nixpkgs, nixpkgsForOS, home-manager, flake-utils, devshell, blesh, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -29,7 +30,7 @@
     {
       formatter.${system} = pkgs.nixpkgs-fmt;
 
-      nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.${hostname} = nixpkgsForOS.lib.nixosSystem {
         inherit system;
         modules = [ ./nixos/configuration.nix ];
       };
@@ -160,6 +161,14 @@
               help = "Switch nixos to rebuild and apply `configuration.nix` changes";
               command = ''
                 sudo nixos-rebuild switch --flake '.#tars' --impure
+              '';
+            }
+            {
+              name = "dev:os-ls-gen";
+              category = "NixOS";
+              help = "List all nixos generations";
+              command = ''
+                sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
               '';
             }
 
