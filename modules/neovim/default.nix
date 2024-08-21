@@ -54,20 +54,6 @@
           \}
         \}
       '';
-
-      # $XDG_CONFIG_HOME/nvim/coc-settings.json
-      # rnix-lsp 廃止に伴いコメントアウト
-      # settings = {
-      #   "languageserver" = {
-      #     # https://gitlab.com/jD91mZM2/nix-lsp
-      #     "nix" = {
-      #       "command" = "rnix-lsp";
-      #       "filetypes" = [
-      #         "nix"
-      #       ];
-      #     };
-      #   };
-      # };
     };
 
     plugins = with pkgs.vimPlugins; [

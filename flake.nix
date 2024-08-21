@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05"; # for HOME
     nixpkgsForOS.url = "github:nixos/nixpkgs/nixos-22.11"; # for OS
+    nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable"; # for latest
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,14 +18,23 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgsForOS, home-manager, flake-utils, devshell, blesh, ... }:
+  outputs = { self, nixpkgs, nixpkgsForOS, nixpkgsUnstable, home-manager, flake-utils, devshell, blesh, ... }:
     let
       system = "x86_64-linux";
+      
       pkgs = import nixpkgs {
         inherit system;
 
         overlays = [ devshell.overlays.default ];
       };
+
+      pkgsUnstable = import nixpkgsUnstable {
+        inherit system;
+        config = {
+          allowUnfree = true;
+        };
+      };
+
       hostname = "tars";
     in
     {
@@ -44,6 +54,7 @@
 
         extraSpecialArgs = {
           inherit blesh;
+          inherit pkgsUnstable;
         };
       };
 
