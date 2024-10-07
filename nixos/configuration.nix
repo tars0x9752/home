@@ -16,7 +16,7 @@
   imports =
     [
       # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
+      ./hardware-configuration.nix
     ];
 
   # Bootloader.
@@ -79,6 +79,10 @@
 
     logind.lidSwitch = "ignore";
   };
+
+  hardware.bluetooth.enable = true; # enables support for Bluetooth
+  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+  services.blueman.enable = true;
 
   hardware.nvidia.prime = {
     # 基本的に nvidia カードに接続した外付けディスプレイを常に使用するので offload ではなく sync mode にしておく
