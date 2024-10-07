@@ -70,8 +70,8 @@
         }
       ];
 
-      layout = "jp";
-      xkbVariant = "OADG109A";
+      xkb.layout = "jp";
+      xkb.variant = "OADG109A";
       videoDrivers = [ "nvidia" ];
 
       exportConfiguration = true;

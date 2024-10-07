@@ -86,22 +86,6 @@
         "type": "github"
       }
     },
-    "nixpkgsForOS": {
-      "locked": {
-        "lastModified": 1688392541,
-        "narHash": "sha256-lHrKvEkCPTUO+7tPfjIcb7Trk6k31rz18vkyqmkeJfY=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "ea4c80b39be4c09702b0cb3b42eab59e2ba4f24b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-22.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgsUnstable": {
       "locked": {
         "lastModified": 1723991338,
@@ -141,7 +125,6 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgsForOS": "nixpkgsForOS",
         "nixpkgsUnstable": "nixpkgsUnstable"
       }
     },

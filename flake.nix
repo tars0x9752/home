@@ -2,8 +2,7 @@
   description = "Home Manager Configuration Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05"; # for HOME
-    nixpkgsForOS.url = "github:nixos/nixpkgs/nixos-22.11"; # for OS
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable"; # for latest
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -18,10 +17,10 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgsForOS, nixpkgsUnstable, home-manager, flake-utils, devshell, blesh, ... }:
+  outputs = { self, nixpkgs, nixpkgsUnstable, home-manager, flake-utils, devshell, blesh, ... }:
     let
       system = "x86_64-linux";
-      
+
       pkgs = import nixpkgs {
         inherit system;
 
@@ -40,7 +39,7 @@
     {
       formatter.${system} = pkgs.nixpkgs-fmt;
 
-      nixosConfigurations.${hostname} = nixpkgsForOS.lib.nixosSystem {
+      nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [ ./nixos/configuration.nix ];
       };
@@ -78,8 +77,6 @@
         };
       };
     } //
-    # currently my home configs support only x86_64-linux.
-    # So eachDefaultSystem doesn't mean much, but it's harmless as it is & I want to remember flake-utils is a thing, so I'll leave it here.
     flake-utils.lib.eachDefaultSystem
       (system: {
         # Trying devShells and devshell as a better alternative to Makefile.
