@@ -72,6 +72,10 @@
 
       xkb.layout = "jp";
       xkb.variant = "OADG109A";
+
+      autoRepeatDelay = 190;
+      autoRepeatInterval = 35;
+
       videoDrivers = [ "nvidia" ];
 
       exportConfiguration = true;
