@@ -17,69 +17,98 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgsUnstable, home-manager, flake-utils, devshell, blesh, ... }:
-    let
-      system = "x86_64-linux";
-
-      pkgs = import nixpkgs {
-        inherit system;
-
-        overlays = [ devshell.overlays.default ];
-      };
-
-      pkgsUnstable = import nixpkgsUnstable {
-        inherit system;
-        config = {
-          allowUnfree = true;
-        };
-      };
-
-      hostname = "tars";
-    in
+  outputs =
     {
-      formatter.${system} = pkgs.nixpkgs-fmt;
+      self,
+      nixpkgs,
+      nixpkgsUnstable,
+      home-manager,
+      flake-utils,
+      devshell,
+      blesh,
+      ...
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
 
-      nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [ ./nixos/configuration.nix ];
-      };
-
-      homeConfigurations.${hostname} = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        modules = [
-          ./home.nix
-        ];
-
-        extraSpecialArgs = {
-          inherit blesh;
-          inherit pkgsUnstable;
+          overlays = [ devshell.overlays.default ];
         };
-      };
 
-      # https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-run.html?highlight=apps.%3Csystem%3E#apps
-      # https://nix-community.github.io/home-manager/index.html#sec-flakes-standalone
-      apps.${system} = {
-        "activate/${hostname}" =
-          let
-            drv = self.outputs.homeConfigurations.${hostname}.activationPackage;
-            exePath = "/activate";
-          in
-          {
-            type = "app";
-            program = "${drv}${exePath}";
+        pkgsUnstable = import nixpkgsUnstable {
+          inherit system;
+          config = {
+            allowUnfree = true;
           };
-
-        # just for fun
-        "figlet" = {
-          type = "app";
-          program = "${pkgs.figlet}/bin/figlet";
         };
-      };
-    } //
-    flake-utils.lib.eachDefaultSystem
-      (system: {
-        # Trying devShells and devshell as a better alternative to Makefile.
+
+        hosts = {
+          david-nixos = "david-nixos";
+          lucy-macos = "lucy-macos";
+        };
+      in
+      {
+        formatter = pkgs.nixfmt-rfc-style;
+
+        nixosConfigurations.${hosts.david-nixos} = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [ ./nixos/configuration.nix ];
+        };
+
+        homeConfigurations.${hosts.david-nixos} = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+
+          modules = [ ./hosts/david-nixos/home.nix ];
+
+          extraSpecialArgs = {
+            inherit blesh;
+            inherit pkgsUnstable;
+          };
+        };
+
+        homeConfigurations.${hosts.lucy-macos} = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+
+          modules = [ ./hosts/lucy-macos/home.nix ];
+
+          extraSpecialArgs = {
+            inherit blesh;
+            inherit pkgsUnstable;
+          };
+        };
+
+        # https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-run.html?highlight=apps.%3Csystem%3E#apps
+        # https://nix-community.github.io/home-manager/index.html#sec-flakes-standalone
+        apps = {
+          "activate/${hosts.david-nixos}" =
+            let
+              drv = self.outputs.homeConfigurations.${system}.${hosts.david-nixos}.activationPackage;
+              exePath = "/activate";
+            in
+            {
+              type = "app";
+              program = "${drv}${exePath}";
+            };
+
+          "activate/${hosts.lucy-macos}" =
+            let
+              drv = self.outputs.homeConfigurations.${system}.${hosts.lucy-macos}.activationPackage;
+              exePath = "/activate";
+            in
+            {
+              type = "app";
+              program = "${drv}${exePath}";
+            };
+
+          # just for fun
+          "figlet" = {
+            type = "app";
+            program = "${pkgs.figlet}/bin/figlet";
+          };
+        };
+
         # https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-develop.html
         # https://github.com/numtide/devshell
         devShells.default = pkgs.devshell.mkShell {
@@ -101,13 +130,23 @@
 
             # --- Initial Setup ---
             {
-              name = "dev:install";
+              name = "dev:install-david-nixos";
               category = "Initial Setup";
               help = "Install home-manager itself and apply the home configuration";
               command = ''
                 export HOME_MANAGER_BACKUP_EXT=old
-                nix run '.#activate/tars'
+                nix run '.#activate/david-nixos'
                 direnv allow
+              '';
+            }
+
+            {
+              name = "dev:install-lucy-macos";
+              category = "Initial Setup";
+              help = "Install home-manager itself and apply the home configuration";
+              command = ''
+                export HOME_MANAGER_BACKUP_EXT=old
+                nix run '.#activate/lucy-macos'
               '';
             }
 
@@ -239,5 +278,6 @@
             }
           ];
         };
-      });
+      }
+    );
 }
