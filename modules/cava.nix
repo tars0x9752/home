@@ -1,9 +1,7 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    cava
-  ];
+  home.packages = with pkgs; [ cava ];
 
   xdg.configFile."cava/config".text = ''
     [color]

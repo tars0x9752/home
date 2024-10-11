@@ -13,11 +13,10 @@
     keep-derivations = true
   '';
 
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -111,12 +110,20 @@
   # docker
   virtualisation.docker.enable = true;
 
-  nix.settings.trusted-users = [ "root" "tars" ];
+  nix.settings.trusted-users = [
+    "root"
+    "tars"
+  ];
 
   users.users.tars = {
     isNormalUser = true;
     description = "tars";
-    extraGroups = [ "networkmanager" "wheel" "audio" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "audio"
+      "docker"
+    ];
     packages = with pkgs; [ ];
   };
 

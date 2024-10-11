@@ -79,7 +79,7 @@
     extraConfig = ''
       " --- lualine ---
       set laststatus=0
-      
+
       lua << END
       require('lualine').setup {
         options = { theme  = 'ayu_mirage' },

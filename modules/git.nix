@@ -7,7 +7,12 @@ let
   DEVELOP_BRANCH = "develop";
   DEVELOP_BRANCH_ABBREV = "dev";
 
-  PROTECTED_BRANCHE_LIST = [ DEFAULT_BRANCH DEFAULT_BRANCH_OLD DEVELOP_BRANCH DEVELOP_BRANCH_ABBREV ];
+  PROTECTED_BRANCHE_LIST = [
+    DEFAULT_BRANCH
+    DEFAULT_BRANCH_OLD
+    DEVELOP_BRANCH
+    DEVELOP_BRANCH_ABBREV
+  ];
 
   PROTECTED_BRANCHES_STR = concatStringsSep "|" PROTECTED_BRANCHE_LIST;
 in
@@ -25,7 +30,7 @@ in
     userName = "tars0x9752";
     userEmail = "46079709+tars0x9752@users.noreply.github.com";
 
-    includes = [{ path = "~/.config/git/localconf"; }];
+    includes = [ { path = "~/.config/git/localconf"; } ];
 
     signing = {
       key = "7E48DB4B7AADB252";
@@ -188,11 +193,13 @@ in
       git pull "$@"
     }
 
-    ${concatStringsSep "\n" (map (branchname: ''
-    g:pull.${branchname}() {
-      git pull origin ${branchname}
-    }
-    '') PROTECTED_BRANCHE_LIST)}
+    ${concatStringsSep "\n" (
+      map (branchname: ''
+        g:pull.${branchname}() {
+          git pull origin ${branchname}
+        }
+      '') PROTECTED_BRANCHE_LIST
+    )}
 
     # ------ log ------
 
@@ -246,11 +253,13 @@ in
       git remote set-head origin --auto
     }
 
-    ${concatStringsSep "\n" (map (branchname: ''
-    g:remote.set-head.origin.${branchname}() {
-      git remote set-head origin ${branchname}
-    }
-    '') PROTECTED_BRANCHE_LIST)}
+    ${concatStringsSep "\n" (
+      map (branchname: ''
+        g:remote.set-head.origin.${branchname}() {
+          git remote set-head origin ${branchname}
+        }
+      '') PROTECTED_BRANCHE_LIST
+    )}
 
     g:remote.show.origin() {
       git remote show origin
@@ -393,19 +402,21 @@ in
       git branch -D $(git branch | rg --invert-match "\*|${PROTECTED_BRANCHES_STR}")
     }
 
-    ${concatStringsSep "\n" (map (branchname: ''
-    # 現在のブランチを ${branchname} に rebase する
-    g:rebase-${branchname}() {
-      local currentbranch=$(git branch --show-current)
-      if [[ "$currentbranch" == "${branchname}" ]]; then
-        echo "Invalid operation. you are in ${branchname} branch."
-        false
-      else
-        git fetch origin
-        git rebase origin/${branchname}
-      fi
-    }
-    '') PROTECTED_BRANCHE_LIST)}
+    ${concatStringsSep "\n" (
+      map (branchname: ''
+        # 現在のブランチを ${branchname} に rebase する
+        g:rebase-${branchname}() {
+          local currentbranch=$(git branch --show-current)
+          if [[ "$currentbranch" == "${branchname}" ]]; then
+            echo "Invalid operation. you are in ${branchname} branch."
+            false
+          else
+            git fetch origin
+            git rebase origin/${branchname}
+          fi
+        }
+      '') PROTECTED_BRANCHE_LIST
+    )}
 
     # ------ handy fns ------
 
@@ -433,16 +444,18 @@ in
       g:fetch.prune
     }
 
-    ${concatStringsSep "\n" (map (branchname: ''
-    g@${branchname}() {
-      echo "run: g:fetch.prune"
-      g:fetch.prune
-      echo "run: g:switch ${branchname}"
-      g:switch ${branchname}
-      echo "run: g:pull.${branchname}"
-      g:pull.${branchname}
-    }
-    '') PROTECTED_BRANCHE_LIST)}
+    ${concatStringsSep "\n" (
+      map (branchname: ''
+        g@${branchname}() {
+          echo "run: g:fetch.prune"
+          g:fetch.prune
+          echo "run: g:switch ${branchname}"
+          g:switch ${branchname}
+          echo "run: g:pull.${branchname}"
+          g:pull.${branchname}
+        }
+      '') PROTECTED_BRANCHE_LIST
+    )}
 
     g@d() {
       echo "run g:diff"
@@ -484,12 +497,14 @@ in
       g:restore.all
     }
 
-    ${concatStringsSep "\n" (map (branchname: ''
-    g@rb.${branchname}() {
-      echo "run g:rebase-${branchname}"
-      g:rebase-${branchname}
-    }
-    '') PROTECTED_BRANCHE_LIST)}
+    ${concatStringsSep "\n" (
+      map (branchname: ''
+        g@rb.${branchname}() {
+          echo "run g:rebase-${branchname}"
+          g:rebase-${branchname}
+        }
+      '') PROTECTED_BRANCHE_LIST
+    )}
 
     g@un() {
       echo "run g:restore.unstage.all"

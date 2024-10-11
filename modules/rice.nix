@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   colors = rec {
@@ -57,12 +62,23 @@ in
 
         terminal = "wezterm";
 
-        floating.criteria = [{ class = "Pavucontrol"; }];
+        floating.criteria = [ { class = "Pavucontrol"; } ];
 
         startup = [
-          { command = "systemctl --user restart polybar"; always = true; notification = false; }
-          { command = "xset s off -dpms"; always = true; notification = false; }
-          { command = "xrandr --output eDP-1-1 --auto --left-of HDMI-0"; notification = false; }
+          {
+            command = "systemctl --user restart polybar";
+            always = true;
+            notification = false;
+          }
+          {
+            command = "xset s off -dpms";
+            always = true;
+            notification = false;
+          }
+          {
+            command = "xrandr --output eDP-1-1 --auto --left-of HDMI-0";
+            notification = false;
+          }
           {
             command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
             always = true;
@@ -122,7 +138,12 @@ in
 
         window.border = 1; # 新規作成した window にのみ有効
 
-        workspaceOutputAssign = [{ output = "eDP-1-1"; workspace = "10"; }];
+        workspaceOutputAssign = [
+          {
+            output = "eDP-1-1";
+            workspace = "10";
+          }
+        ];
       };
 
       extraConfig = ''for_window [all] title_window_icon padding 10px'';
@@ -138,7 +159,14 @@ in
   programs.rofi = {
     enable = true;
 
-    package = with pkgs; rofi.override { plugins = [ rofi-calc rofi-emoji ]; };
+    package =
+      with pkgs;
+      rofi.override {
+        plugins = [
+          rofi-calc
+          rofi-emoji
+        ];
+      };
     extraConfig = {
       show-icons = true;
       modi = "drun,emoji,calc";
@@ -175,7 +203,10 @@ in
         inputbar = {
           padding = mkL "12px";
           spacing = mkL "12px";
-          children = map mkL [ "icon-search" "entry" ];
+          children = map mkL [
+            "icon-search"
+            "entry"
+          ];
         };
 
         icon-search = {
@@ -254,7 +285,7 @@ in
 
     config =
       let
-        pulseaudio-control = "${pkgs.callPackage ./pulseaudio-control.nix { } }/bin/pulseaudio-control";
+        pulseaudio-control = "${pkgs.callPackage ./pulseaudio-control.nix { }}/bin/pulseaudio-control";
       in
       {
         "global/wm" = {
@@ -367,7 +398,9 @@ in
 
           # 必要に応じて nickname および sink や source 名(node名)を変更すること
           # --color-muted は # なしの rrggbb のため # を取り除く
-          exec = ''${pulseaudio-control} --format '$VOL_ICON $VOL_LEVEL $NODE_NICKNAME' --color-muted "${builtins.replaceStrings ["#"] [""] colors.disabled}" --icons-volume " , " --icon-muted " " --node-nicknames-from "device.profile.name" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:built-in" listen'';
+          exec = ''${pulseaudio-control} --format '$VOL_ICON $VOL_LEVEL $NODE_NICKNAME' --color-muted "${
+            builtins.replaceStrings [ "#" ] [ "" ] colors.disabled
+          }" --icons-volume " , " --icon-muted " " --node-nicknames-from "device.profile.name" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:built-in" listen'';
           click-right = "exec ${pkgs.pavucontrol}/bin/pavucontrol &";
           click-left = "${pulseaudio-control} togmute";
           click-middle = "${pulseaudio-control} next-node";

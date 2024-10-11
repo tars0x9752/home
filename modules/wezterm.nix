@@ -1,9 +1,7 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    wezterm
-  ];
+  home.packages = with pkgs; [ wezterm ];
 
   # NOTE: 今のバージョンでは color_scheme のほうが colors より優先度が高いので scheme の色を上書きしたい場合は color_scheme を再定義する必要がある
   # NOTE: バージョンが 20220903 以上になったら colors が color_scheme より優先度高くなるので, 普通に colors で上書きする色を定義すればよくなる
@@ -14,7 +12,7 @@
     my_framer.cursor_fg = '#181818'
     my_framer.cursor_bg = '#EEEEEE'
     my_framer.compose_cursor = '#20BCFC'
-    
+
     return {
       font_size = 16,
       window_background_opacity = 0.85,

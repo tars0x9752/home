@@ -1,9 +1,7 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    neofetch
-  ];
+  home.packages = with pkgs; [ neofetch ];
 
   xdg.configFile."neofetch/config.conf".text = ''
     # See this wiki page for more info:

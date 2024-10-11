@@ -1,10 +1,17 @@
 { lib, pkgs, ... }:
 
-
 # writeShellApplication で書くと shellcheck で落ちる & なんとか check 通しても自動挿入される shellopts によっていろいろぶっ壊れたのでおとなしく writeShellScriptBin で書く
 with pkgs;
 writeShellScriptBin "pulseaudio-control" ''
-  PATH=${lib.makeBinPath [ coreutils gnugrep gawk gnused pulseaudio ]}
+  PATH=${
+    lib.makeBinPath [
+      coreutils
+      gnugrep
+      gawk
+      gnused
+      pulseaudio
+    ]
+  }
 
   ##################################################################
   # Polybar Pulseaudio Control                                     #
