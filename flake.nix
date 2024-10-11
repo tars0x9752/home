@@ -12,7 +12,7 @@
     flake-utils.url = "github:numtide/flake-utils";
 
     blesh = {
-      url = "https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly-20220825+793dfad.tar.xz";
+      url = "https://github.com/akinomyoga/ble.sh/releases/download/v0.4.0-devel3/ble-0.4.0-devel3.tar.xz";
       flake = false;
     };
   };
