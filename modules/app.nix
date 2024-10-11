@@ -1,10 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, pkgsUnstable, ... }:
 
 {
   home.packages = with pkgs; [
     discord
     element-desktop
     firefox
+    pkgsUnstable.google-chrome
     xfce.thunar
     gimp
     lxappearance

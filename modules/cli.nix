@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     # nix
-    rnix-lsp
+    # rnix-lsp # 'rnix-lsp' has been removed as it is unmaintained
     nixpkgs-fmt
     nix-prefetch-git
     nix-prefetch-github

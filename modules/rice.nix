@@ -61,7 +61,7 @@ in
 
         startup = [
           { command = "systemctl --user restart polybar"; always = true; notification = false; }
-          { command = "xset r rate 200 30"; always = true; notification = false; }
+          { command = "xset s off -dpms"; always = true; notification = false; }
           { command = "xrandr --output eDP-1-1 --auto --left-of HDMI-0"; notification = false; }
           {
             command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";

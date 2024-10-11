@@ -2,9 +2,10 @@
   description = "Home Manager Configuration Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable"; # for latest
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     devshell.url = "github:numtide/devshell";
@@ -16,14 +17,23 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, devshell, blesh, ... }:
+  outputs = { self, nixpkgs, nixpkgsUnstable, home-manager, flake-utils, devshell, blesh, ... }:
     let
       system = "x86_64-linux";
+
       pkgs = import nixpkgs {
         inherit system;
 
         overlays = [ devshell.overlays.default ];
       };
+
+      pkgsUnstable = import nixpkgsUnstable {
+        inherit system;
+        config = {
+          allowUnfree = true;
+        };
+      };
+
       hostname = "tars";
     in
     {
@@ -43,6 +53,7 @@
 
         extraSpecialArgs = {
           inherit blesh;
+          inherit pkgsUnstable;
         };
       };
 
@@ -66,8 +77,6 @@
         };
       };
     } //
-    # currently my home configs support only x86_64-linux.
-    # So eachDefaultSystem doesn't mean much, but it's harmless as it is & I want to remember flake-utils is a thing, so I'll leave it here.
     flake-utils.lib.eachDefaultSystem
       (system: {
         # Trying devShells and devshell as a better alternative to Makefile.
@@ -160,6 +169,14 @@
               help = "Switch nixos to rebuild and apply `configuration.nix` changes";
               command = ''
                 sudo nixos-rebuild switch --flake '.#tars' --impure
+              '';
+            }
+            {
+              name = "dev:os-ls-gen";
+              category = "NixOS";
+              help = "List all nixos generations";
+              command = ''
+                sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
               '';
             }
 
