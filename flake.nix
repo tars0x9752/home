@@ -10,6 +10,7 @@
     };
     devshell.url = "github:numtide/devshell";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
     blesh = {
       url = "https://github.com/akinomyoga/ble.sh/releases/download/v0.4.0-devel3/ble-0.4.0-devel3.tar.xz";
       flake = false;
@@ -40,7 +41,10 @@
         "x86_64-linux"
       ];
 
-      imports = [ inputs.devshell.flakeModule ];
+      imports = [
+        inputs.devshell.flakeModule
+        inputs.treefmt-nix.flakeModule
+      ];
 
       flake =
         let
@@ -90,7 +94,10 @@
           ...
         }:
         {
-          formatter = pkgs.nixfmt-rfc-style;
+          treefmt = {
+            projectRootFile = "flake.nix";
+            programs.nixfmt.enable = true;
+          };
 
           # https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-run.html?highlight=apps.%3Csystem%3E#apps
           # https://nix-community.github.io/home-manager/index.html#sec-flakes-standalone
